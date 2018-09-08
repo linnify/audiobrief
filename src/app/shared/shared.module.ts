@@ -8,7 +8,7 @@ import {AppMaterialModule} from '../app-material.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    AppMaterialModule
+    AppMaterialModule,
   ],
   declarations: [],
   exports: [

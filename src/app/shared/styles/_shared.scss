@@ -1,10 +1,30 @@
 $content-width: 1024px;
-$background-color: #f9f9f9;
-$top-bar-height: 70px;
+$top-bar-height: 65px;
+$small-margin: 8px;
+$big-margin: 16px;
+$typography-margin: 4px;
+$topic-color: #c7c7c7;
+$list-item-height: 100px;
 
 @mixin mat-icon-size($size: 24px) {
   font-size: $size;
   height: $size;
   width: $size;
-  line-height: $size;
+  line-height: $size !important;
+}
+
+.main-button {
+  width: 55px !important;
+  height: 55px  !important;
+  line-height:50px !important;
+}
+
+.big-icon {
+  color: #a0a4b2;
+  @include mat-icon-size(50px);
+}
+
+.medium-icon {
+  color: #a0a4b2;
+  @include mat-icon-size(30px);
 }

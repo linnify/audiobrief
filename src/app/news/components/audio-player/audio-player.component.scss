@@ -1,0 +1,53 @@
+@import '~src/app/shared/styles/shared';
+@import '~@angular/material/theming';
+
+.audio-player{
+  width: 100%;
+  display: flex;
+  &__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: $small-margin;
+    width: 700px;
+    overflow: hidden;
+
+    &-title {
+      color:white;
+      margin-bottom: 4px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    &-topics {
+      text-transform: uppercase;
+      color: $topic-color;
+    }
+  }
+
+  &__buttons {
+    padding-left: $big-margin;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+}
+
+.progress-bar-container {
+  padding-left: $big-margin;
+}
+
+::ng-deep .mat-progress-bar-fill::after {
+  background-color: white;
+}
+
+::ng-deep .mat-progress-bar-buffer {
+  background: #527db9;
+}
+
+::ng-deep .mat-progress-bar {
+  border-radius: 5px;
+  width: 85% !important;
+}
+

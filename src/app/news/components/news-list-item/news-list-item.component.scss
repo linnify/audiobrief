@@ -1,0 +1,37 @@
+@import '~src/app/shared/styles/shared';
+
+.news-item {
+  width: 90%;
+  margin: auto;
+
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: $list-item-height;
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height:100%;
+  }
+}
+
+
+.mat-title {
+  margin-bottom: $typography-margin;
+  color: #4A4A4B;
+}
+
+.mat-subheading-2 {
+  text-transform: uppercase;
+  margin-bottom: 0;
+  color: $topic-color;
+}
+
+.mat-subheading-1 {
+  color: #d8d8d8;
+  margin-bottom: $typography-margin;
+}

@@ -7,7 +7,7 @@ const routes: Routes = [{
   },
   {
     path: 'news-feed',
-    loadChildren: './audio/audio.module#AudioModule'
+    loadChildren: './news/audio.module#AudioModule'
   }
 ];
 

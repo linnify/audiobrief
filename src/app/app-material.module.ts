@@ -3,10 +3,10 @@ import {
   MatAutocompleteModule,
   MatButtonModule,
   MatCardModule,
-  MatDividerModule,
+  MatDividerModule, MatExpansionModule,
   MatIconModule,
-  MatInputModule,
-  MatProgressSpinnerModule,
+  MatInputModule, MatListModule, MatMenuModule, MatProgressBarModule,
+  MatProgressSpinnerModule, MatSliderModule, MatToolbarModule,
 } from '@angular/material';
 
 @NgModule({
@@ -18,6 +18,12 @@ import {
     MatDividerModule,
     MatInputModule,
     MatProgressSpinnerModule,
+    MatListModule,
+    MatExpansionModule,
+    MatSliderModule,
+    MatToolbarModule,
+    MatProgressBarModule,
+    MatMenuModule
   ],
   exports: [
     MatAutocompleteModule,
@@ -27,6 +33,12 @@ import {
     MatDividerModule,
     MatInputModule,
     MatProgressSpinnerModule,
+    MatListModule,
+    MatExpansionModule,
+    MatSliderModule,
+    MatToolbarModule,
+    MatProgressBarModule,
+    MatMenuModule
   ],
 })
 export class AppMaterialModule {}

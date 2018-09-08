@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/theming';
+@import 'app/shared/styles/theme';
+@import '~src/app/shared/styles/shared';
+
+@include mat-core() @include angular-material-theme($audionews-app-theme);
+//
+//body {
+//  background-color: $background-color;
+//}
+//
+
+html, body { height: 100%; }
+body { margin: 0; font-family: 'Roboto', sans-serif; }

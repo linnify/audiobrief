@@ -1,0 +1,7 @@
+@import '~@angular/material/theming';
+
+$audionews-app-primary: mat-palette($mat-blue);
+
+$audionews-app-accent: mat-palette($mat-grey);
+
+$audionews-app-theme: mat-light-theme($audionews-app-primary, $audionews-app-accent);

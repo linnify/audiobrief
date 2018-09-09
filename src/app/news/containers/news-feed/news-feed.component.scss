@@ -1,4 +1,4 @@
-@import '~src/app/shared/styles/shared';
+@import '../../../shared/styles/shared';
 
 .audio-player {
   top: 0;
@@ -18,7 +18,7 @@
 }
 
 .user-menu {
-  padding-right: $big-margin;
+  padding-right: $medium-margin;
 }
 
 ::ng-deep {

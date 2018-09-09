@@ -1,10 +1,17 @@
+@import '~@angular/material/theming';
+
+
 $content-width: 1024px;
 $top-bar-height: 65px;
 $small-margin: 8px;
-$big-margin: 16px;
+$medium-margin: 16px;
+$big-margin: 32px;
+
 $typography-margin: 4px;
 $topic-color: #c7c7c7;
 $list-item-height: 100px;
+$background-color: map_get($mat-grey, 100);
+
 
 @mixin mat-icon-size($size: 24px) {
   font-size: $size;

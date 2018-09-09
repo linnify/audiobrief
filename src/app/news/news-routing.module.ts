@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {NewsListComponent} from './components/news-list/news-list.component';
-import {NewsFeedComponent} from './components/news-feed/news-feed.component';
+import {NewsFeedComponent} from './containers/news-feed/news-feed.component';
 
 const routes: Routes = [
   {
@@ -13,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AudioRoutingModule { }
+export class NewsRoutingModule { }

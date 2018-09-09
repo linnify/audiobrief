@@ -4,4 +4,10 @@ $audionews-app-primary: mat-palette($mat-blue, 800);
 
 $audionews-app-accent: mat-palette($mat-grey);
 
-$audionews-app-theme: mat-light-theme($audionews-app-primary, $audionews-app-accent);
+$audionews-app-warn: mat-palette($mat-red, 900);
+
+$warn-color: map_get($mat-red, 900);
+
+$audionews-app-theme: mat-light-theme($audionews-app-primary, $audionews-app-accent, $audionews-app-warn);
+
+$grey-color: map_get($mat-grey, 500);

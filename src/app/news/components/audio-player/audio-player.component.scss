@@ -27,7 +27,7 @@
   }
 
   &__buttons {
-    padding-left: $big-margin;
+    padding-left: $medium-margin;
     display: flex;
     align-items: center;
     width: 100%;
@@ -35,7 +35,7 @@
 }
 
 .progress-bar-container {
-  padding-left: $big-margin;
+  padding-left: $medium-margin;
 }
 
 ::ng-deep .mat-progress-bar-fill::after {

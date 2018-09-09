@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppMaterialModule} from '../app-material.module';
+import {HttpClientModule} from '@angular/common/http';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import {ScrollableDirective} from './directives/scrollable.directive';
 
 @NgModule({
   imports: [
@@ -9,12 +12,16 @@ import {AppMaterialModule} from '../app-material.module';
     FormsModule,
     ReactiveFormsModule,
     AppMaterialModule,
+    HttpClientModule
   ],
-  declarations: [],
+  declarations: [NotFoundComponent, ScrollableDirective],
   exports: [
     FormsModule,
     ReactiveFormsModule,
-    AppMaterialModule
+    AppMaterialModule,
+    HttpClientModule,
+    NotFoundComponent,
+    ScrollableDirective
   ]
 })
 export class SharedModule { }

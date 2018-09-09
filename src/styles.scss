@@ -3,13 +3,15 @@
 @import '~@angular/material/theming';
 @import 'app/shared/styles/theme';
 @import '~src/app/shared/styles/shared';
-@import '~src/app/shared/styles/_typography';
-@include mat-core($custom-typography) @include angular-material-theme($audionews-app-theme);
-//
-//body {
-//  background-color: $background-color;
-//}
-//
+@import '~src/app/shared/styles/typography';
+@import '~src/app/shared/styles/form';
+@import '~src/app/shared/styles/font';
 
-html, body { height: 100%; }
+@include mat-core($custom-typography) @include angular-material-theme($audionews-app-theme);
+
+body {
+  background-color: $background-color;
+}
+
+html, body { height: 100%;width: 100% }
 body { margin: 0; font-family: 'Roboto', sans-serif; }

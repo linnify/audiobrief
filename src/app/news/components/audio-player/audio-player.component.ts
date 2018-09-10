@@ -4,7 +4,7 @@ import {NewsEntry} from '../../types/news-entry';
 @Component({
   selector: 'audio-player',
   template: `
-    <div class="audio-player" *ngIf="newsEntries">
+    <div class="audio-player" *ngIf="newsEntries && newsEntries.length !== 0">
       <div class="audio-player__text">
         <div class="mat-body-1 audio-player__text-title">
           {{currentNews.title}}

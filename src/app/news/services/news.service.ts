@@ -11,12 +11,10 @@ export class NewsService {
   private _currentNews: BehaviorSubject<NewsEntry> = new BehaviorSubject(null);
   private _playing: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-
   currentNews: Observable<NewsEntry> = this._currentNews.asObservable();
   playing: Observable<boolean> = this._playing.asObservable();
 
   constructor(private apiService: ApiService) { }
-
 
   getNewsEntries(): Observable<NewsEntry[]> {
 

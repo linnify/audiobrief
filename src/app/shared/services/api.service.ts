@@ -52,10 +52,13 @@ export class ApiService {
   private getHeaders(): HttpHeaders {
     const token: string = this.authToken ? this.authToken.accessToken : null;
 
-    return new HttpHeaders({
-      'Authorization': 'Bearer ' + token,
-      'Accept': `application/json; charset=utf-8`
-    });
+    if (token) {
+      return new HttpHeaders({
+        'Authorization': 'Bearer ' + token,
+        'Accept': `application/json; charset=utf-8`
+      });
+    }
+
   }
 
   private getOptions(params: HttpParams | { [param: string]: string | string[]}) {

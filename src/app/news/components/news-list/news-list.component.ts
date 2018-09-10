@@ -9,7 +9,7 @@ import {NewsEntry} from '../../types/news-entry';
         <div  class="list-item" *ngFor="let newsEntry of newsEntries">
           <news-list-item
             [newsEntry]="newsEntry"
-            [playing]="currentNews === newsEntry && playing"
+            [playing]="currentNews.id === newsEntry.id && playing"
             (play)="onPlay($event)"
             (pause)="onPause()">
           </news-list-item>

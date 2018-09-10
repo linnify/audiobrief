@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "trivia-development"
+  },
+  "targets": {
+    "trivia-development": {
+      "hosting": {
+        "audionews": [
+          "audio-news"
+        ]
+      }
+    }
+  }
+}

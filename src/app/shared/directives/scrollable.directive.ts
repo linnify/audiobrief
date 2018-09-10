@@ -15,8 +15,8 @@ export class ScrollableDirective {
       const height = this.el.nativeElement.scrollHeight;
       const offset = this.el.nativeElement.offsetHeight;
 
-      console.log(height - offset - 1);
-      console.log(top);
+      // console.log(height - offset - 1);
+      // console.log(top);
       if (top > height - offset - 1) {
         this.scrollPosition.emit('bottom');
       }

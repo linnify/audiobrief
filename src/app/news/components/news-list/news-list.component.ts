@@ -4,7 +4,7 @@ import {NewsEntry} from '../../types/news-entry';
 @Component({
   selector: 'news-list',
   template: `
-    <div class="news-list" scrollable (scrollPosition)="onScroll($event)">
+    <div class="news-list">
       <div *ngIf="!loading">
         <div  class="list-item" *ngFor="let newsEntry of newsEntries">
           <news-list-item

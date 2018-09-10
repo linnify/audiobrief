@@ -51,20 +51,22 @@ export class AudioPlayerComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnChanges() {
-    if (this.currentNews) {
-      this.audio.src = this.currentNews.mp3File;
-    }
+
 
     this.audio.autoplay = this.playing;
     if (this.playing) {
       if (this.currentNews.mp3File !== this.audio.src) {
-        this.currentNewsIndex = this.newsEntries.indexOf(this.currentNews);
+        this.currentNewsIndex = this.newsEntries.findIndex((newsEntry: NewsEntry) => newsEntry.id === this.currentNews.id);
         this.audio.src = this.currentNews.mp3File;
       }
       this.onPlay();
     } else {
       this.onPause();
     }
+
+    // if (this.currentNews) {
+    //   this.audio.src = this.currentNews.mp3File;
+    // }
   }
 
   ngAfterViewInit() {

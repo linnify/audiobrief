@@ -51,7 +51,10 @@ export class NewsService {
 
 
   onPlay(newsEntry: NewsEntry) {
-    this._currentNews.next(newsEntry);
+    if (newsEntry !== this._currentNews.value) {
+      this._currentNews.next(newsEntry);
+    }
+
     this._playing.next(true);
   }
 

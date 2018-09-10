@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "target": "audionews",
+    "public": "dist/audionews",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

@@ -36,6 +36,7 @@
 
 .progress-bar-container {
   padding-left: $medium-margin;
+  margin-right: $small-margin
 }
 
 ::ng-deep .mat-progress-bar-fill::after {
@@ -48,6 +49,37 @@
 
 ::ng-deep .mat-progress-bar {
   border-radius: 5px;
-  width: 85% !important;
+  //width: 85% !important;
 }
 
+
+@media screen and (max-width: 480px) {
+
+  .progress-bar-container {
+    padding-left: $small-margin;
+  }
+
+  .audio-player {
+    flex-direction: column;
+
+    &__text {
+      padding-top: $medium-margin;
+      width: 250px;
+    }
+
+    &__buttons {
+      width: unset;
+    }
+  }
+
+  .mat-body-1 {
+    font-size: 12px;
+    line-height: 12px;
+    margin: 0 0 8px;
+  }
+
+  .mat-caption {
+    font-size: 10px;
+    line-height: 10px;
+  }
+}

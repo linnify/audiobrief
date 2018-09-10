@@ -17,7 +17,6 @@ export class UserExistsGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-    console.log('exists');
     return this.apiService.isAuthenticated()
       .pipe(
         map((authenticated: boolean) => {

@@ -26,3 +26,16 @@
     width: 200px;
   }
 }
+
+@media screen and (max-width: 480px) {
+  .audio-player {
+    height: unset;
+  }
+
+  .user-menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding-right: 0;
+  }
+}

@@ -1,0 +1,7 @@
+export enum StartReason {
+  PREV_ENDED = 'PREV_ENDED',
+  PREV_SKIPPED = 'PREV_SKIPPED',
+  FIRST_PLAY = 'FIRST_PLAY',
+  RESUMED = 'RESUMED',
+  UNKNOWN = 'UNKNOWN'
+}

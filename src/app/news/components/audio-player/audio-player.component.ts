@@ -55,11 +55,10 @@ export class AudioPlayerComponent implements OnInit, OnChanges, AfterViewInit {
 
     this.audio.autoplay = this.playing;
     if (this.playing) {
-      if (this.currentNews.mp3File !== this.audio.src) {
+      if (this.currentNews.mp3_file !== this.audio.src) {
         this.currentNewsIndex = this.newsEntries.findIndex((newsEntry: NewsEntry) => newsEntry.id === this.currentNews.id);
-        this.audio.src = this.currentNews.mp3File;
+        this.audio.src = this.currentNews.mp3_file;
       }
-      this.onPlay();
     } else {
       this.onPause();
     }
@@ -81,9 +80,10 @@ export class AudioPlayerComponent implements OnInit, OnChanges, AfterViewInit {
       }
     });
 
-    this.audio.addEventListener('play', () => {
-      this.play.emit(this.currentNews);
-    });
+    // this.audio.addEventListener('play', () => {
+    //   console.log('play');
+    //   this.play.emit(this.currentNews);
+    // });
 
     this.audio.addEventListener('pause', () => {
       this.pause.emit(this.currentNews);
@@ -91,6 +91,8 @@ export class AudioPlayerComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   onPlay() {
+    console.log('play');
+    this.play.emit(this.currentNews);
     this.audio.play();
   }
 

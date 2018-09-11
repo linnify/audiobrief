@@ -14,7 +14,7 @@ import {months} from '../../../shared/constants';
           <div class="news-item__details">
             <div class="mat-title">{{newsEntry.title}}</div>
             <div class="mat-subheading-2">{{newsEntry.topic}}</div>
-            <div class="mat-subheading-1">{{getFormattedDate(newsEntry.datePublished)}}</div>
+            <div class="mat-subheading-1">{{getFormattedDate(newsEntry.date_published)}}</div>
           </div>
           <button mat-icon-button class="main-button">
             <mat-icon class="big-icon" *ngIf="!playing" (click)="onPlay()">play_circle_filled_white</mat-icon>

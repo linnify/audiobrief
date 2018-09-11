@@ -53,11 +53,11 @@ export class AuthService {
     this.router.navigate(['/']);
   }
 
-  private googleInit() {
-    gapi.load('auth2', () => {
-      this.gauth = gapi.auth2.init({
-
-      })
-    })
-  }
+  // private googleInit() {
+  //   gapi.load('auth2', () => {
+  //     this.gauth = gapi.auth2.init({
+  //
+  //     })
+  //   })
+  // }
 }

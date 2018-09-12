@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {NotFoundComponent} from './shared/components/not-found/not-found.component';
 import {AuthenticatedGuard} from './core/guards/authenticated.guard';
 import {UserExistsGuard} from './core/guards/user-exists.guard';
+import {TopBarComponent} from './core/containers/top-bar/top-bar.component';
 
 const routes: Routes = [{
   path: '',
@@ -11,9 +12,15 @@ const routes: Routes = [{
   loadChildren: './auth/auth.module#AuthModule'
 },
   {
-    path: 'news-feed',
+    path: '',
+    component: TopBarComponent,
     canActivate: [AuthenticatedGuard],
-    loadChildren: './news/news.module#NewsModule'
+    children: [
+      {
+        path: 'news-feed',
+        loadChildren: './news/news.module#NewsModule'
+      },
+    ]
   },
   { path: '**', component:  NotFoundComponent }
 ];

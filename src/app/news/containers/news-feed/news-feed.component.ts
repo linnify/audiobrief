@@ -2,39 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {NewsEntry} from '../../types/news-entry';
 import {NewsService} from '../../services/news.service';
 import {Observable} from 'rxjs';
-import {MatDialog} from '@angular/material';
-import {TopicsPageComponent} from '../../../topics-page/topics-page.component';
-import {AuthService} from '../../../auth/auth.service';
 import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'news-feed',
-  template: `
-      <div class="audio-player">
-        <audio-player style="flex: 1"
-                      [playing]="playing$ | async"
-                      [newsEntries]="newsEntries$ | async"
-                      [currentNews]="currentNews$ | async"
-                      (pause)="onPause($event)"
-                      (change)="onChange($event)"
-                      (play)="onPlay($event)"></audio-player>
-        <div class="user-menu">
-          <button mat-icon-button class="main-button" [matMenuTriggerFor]="userMenu">
-            <mat-icon class="big-icon">account_circle</mat-icon>
-          </button>
-          <mat-menu #userMenu="matMenu">
-            <button mat-menu-item (click)="onTopics()">
-              <mat-icon>list</mat-icon>
-              <span>Topics</span>
-            </button>
-            <button mat-menu-item (click)="onLogout()">
-              <mat-icon>power_settings_new</mat-icon>
-              <span>Logout</span>
-            </button>
-          </mat-menu>
-        </div>
-      </div>
-
+  template: `    
       <news-list
         [newsEntries]="newsEntries$ | async"
         [loading]="loading"
@@ -52,9 +24,7 @@ export class NewsFeedComponent implements OnInit {
   playing$: Observable<boolean>;
   loading: boolean;
   constructor(
-    private newsService: NewsService,
-    private authService: AuthService,
-    private dialog: MatDialog
+    private newsService: NewsService
   ) { }
 
   ngOnInit() {
@@ -73,23 +43,5 @@ export class NewsFeedComponent implements OnInit {
 
   onPause(event: NewsEntry) {
     this.newsService.onPause(event);
-  }
-
-  onChange(event: NewsEntry) {
-    this.newsService.onChange(event);
-  }
-
-  onTopics() {
-    const dialogRef = this.dialog.open(TopicsPageComponent, {
-      width: '700px',
-      height: '700px'
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-    });
-  }
-
-  onLogout() {
-    this.authService.logout();
   }
 }

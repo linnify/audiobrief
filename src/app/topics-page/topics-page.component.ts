@@ -39,6 +39,60 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
         <mat-list-option checkboxPosition="before">
           ECONOMICS
         </mat-list-option>
+        <mat-list-option checkboxPosition="before">
+          ECONOMICS
+        </mat-list-option>
+        <mat-list-option checkboxPosition="before">
+          ECONOMICS
+        </mat-list-option>
+        <mat-list-option checkboxPosition="before">
+          ECONOMICS
+        </mat-list-option>
+        <mat-list-option checkboxPosition="before">
+          ECONOMICS
+        </mat-list-option>
+        <mat-list-option checkboxPosition="before">
+          ECONOMICS
+        </mat-list-option>
+        <mat-list-option checkboxPosition="before">
+          ECONOMICS
+        </mat-list-option>
+        <mat-list-option checkboxPosition="before">
+          ECONOMICS
+        </mat-list-option>
+        <mat-list-option checkboxPosition="before">
+          ECONOMICS
+        </mat-list-option>
+        <mat-list-option checkboxPosition="before">
+          ECONOMICS
+        </mat-list-option>
+        <mat-list-option checkboxPosition="before">
+          ECONOMICS
+        </mat-list-option>
+        <mat-list-option checkboxPosition="before">
+          ECONOMICS
+        </mat-list-option>
+        <mat-list-option checkboxPosition="before">
+          ECONOMICS
+        </mat-list-option>
+        <mat-list-option checkboxPosition="before">
+          ECONOMICS
+        </mat-list-option>
+        <mat-list-option checkboxPosition="before">
+          ECONOMICS
+        </mat-list-option>
+        <mat-list-option checkboxPosition="before">
+          ECONOMICS
+        </mat-list-option>
+        <mat-list-option checkboxPosition="before">
+          ECONOMICS
+        </mat-list-option>
+        <mat-list-option checkboxPosition="before">
+          ECONOMICS
+        </mat-list-option>
+        <mat-list-option checkboxPosition="before">
+          ECONOMICS
+        </mat-list-option>
       </mat-selection-list>
 
       <div style="display: flex; justify-content: flex-end; padding-top: 17px;">

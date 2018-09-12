@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {AuthToken} from '../../auth/types/auth-token';
-import {map, tap} from 'rxjs/operators';
-import {Router} from '@angular/router';
 import {HttpParams} from '@angular/common/http/src/params';
 import {Observable, of} from 'rxjs';
 

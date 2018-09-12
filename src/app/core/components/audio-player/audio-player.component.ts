@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
-import {NewsEntry} from '../../types/news-entry';
+import {NewsEntry} from '../../../news/types/news-entry';
 
 @Component({
   selector: 'audio-player',
@@ -62,10 +62,6 @@ export class AudioPlayerComponent implements OnInit, OnChanges, AfterViewInit {
     } else {
       this.onPause();
     }
-
-    // if (this.currentNews) {
-    //   this.audio.src = this.currentNews.mp3File;
-    // }
   }
 
   ngAfterViewInit() {

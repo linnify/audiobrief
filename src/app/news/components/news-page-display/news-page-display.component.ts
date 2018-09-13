@@ -18,7 +18,7 @@ import {NewsEntry} from '../../types/news-entry';
         <div class="mat-title news-page__actions-url">
           <a href='{{newsEntry.url}}' target="_blank" class="story-button">See full story</a>
         </div>
-        <div class="mat-title news-page__actions-share">
+        <div class="mat-title news-page__actions-share" [text-copy]="newsEntry.url">
           SHARE
         </div>
       </div>

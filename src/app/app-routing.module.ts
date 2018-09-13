@@ -4,6 +4,7 @@ import {NotFoundComponent} from './shared/components/not-found/not-found.compone
 import {AuthenticatedGuard} from './core/guards/authenticated.guard';
 import {UserExistsGuard} from './core/guards/user-exists.guard';
 import {TopBarComponent} from './core/containers/top-bar/top-bar.component';
+import {NewsGuard} from './news/guards/news.guard';
 
 const routes: Routes = [{
   path: '',
@@ -17,7 +18,8 @@ const routes: Routes = [{
     canActivate: [AuthenticatedGuard],
     children: [
       {
-        path: 'news-feed',
+        path: 'news',
+        canActivate: [NewsGuard],
         loadChildren: './news/news.module#NewsModule'
       },
     ]

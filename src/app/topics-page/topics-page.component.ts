@@ -82,7 +82,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
           ECONOMICS
         </mat-list-option>
         <mat-list-option checkboxPosition="before">
-          ECONOMICS
+          ECONOMICSd
         </mat-list-option>
         <mat-list-option checkboxPosition="before">
           ECONOMICS

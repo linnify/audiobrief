@@ -5,6 +5,7 @@ import {AppMaterialModule} from '../app-material.module';
 import {HttpClientModule} from '@angular/common/http';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import {ScrollableDirective} from './directives/scrollable.directive';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
@@ -12,7 +13,7 @@ import {ScrollableDirective} from './directives/scrollable.directive';
     FormsModule,
     ReactiveFormsModule,
     AppMaterialModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   declarations: [NotFoundComponent, ScrollableDirective],
   exports: [
@@ -21,7 +22,7 @@ import {ScrollableDirective} from './directives/scrollable.directive';
     AppMaterialModule,
     HttpClientModule,
     NotFoundComponent,
-    ScrollableDirective
+    ScrollableDirective,
   ]
 })
 export class SharedModule { }

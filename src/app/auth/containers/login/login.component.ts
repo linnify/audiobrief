@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
 
     this.authService.loginWithUsernameAndPassword(username, password)
       .subscribe(() => {
-        this.router.navigate(['news-feed']);
+        this.router.navigate(['news']);
       }, (error: HttpErrorResponse) => {
         this.loading = false;
         this.errorMessage = 'Invalid username or password';

@@ -21,7 +21,7 @@ export class UserExistsGuard implements CanActivate {
       .pipe(
         map((authenticated: boolean) => {
           if (authenticated) {
-            this.router.navigate(['news-feed']);
+            this.router.navigate(['news']);
           }
           return true;
         })

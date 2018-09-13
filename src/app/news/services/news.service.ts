@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {NewsEntry} from '../types/news-entry';
 import {ApiService} from '../../shared/services/api.service';
-import {map} from 'rxjs/operators';
+import {first, map, tap} from 'rxjs/operators';
 import {StartReason} from '../types/start-reason';
 import {StartPlayStat} from '../types/start-play-stat';
 import {EndReason} from '../types/end-reason';
@@ -13,17 +13,11 @@ import {UuidService} from '../../shared/services/uuid.service';
   providedIn: 'root'
 })
 export class NewsService {
-  private firstPlayed: boolean = true;
-  private _currentNews: BehaviorSubject<NewsEntry> = new BehaviorSubject(null);
-  private _playing: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private currentNewsUUID: string;
-
-  currentNews: Observable<NewsEntry> = this._currentNews.asObservable();
-  playing: Observable<boolean> = this._playing.asObservable();
 
   constructor(
     private apiService: ApiService,
-    private uuiService: UuidService
+    private uuidService: UuidService
   ) { }
 
   getNewsEntries(): Observable<NewsEntry[]> {
@@ -39,43 +33,47 @@ export class NewsService {
                 start_at: new Date(news.start_at)
               }
             ));
-          this.currentNewsUUID = this.uuiService.generate();
-          this._currentNews.next(newsEntries[0]);
           return newsEntries;
         })
       );
   }
 
 
-  onPlay(newsEntry: NewsEntry) {
-    if (newsEntry !== this._currentNews.value) {
-      this._currentNews.next(newsEntry);
-    }
+  async play(newsEntry: NewsEntry, oldNewsEntry: NewsEntry) {
+    let startReason: StartReason = StartReason.FIRST_PLAY;
 
-    if (this.firstPlayed) {
-      this.firstPlayed = false;
-      this.sendStartPlayStats(newsEntry, StartReason.FIRST_PLAY);
+    if (!this.currentNewsUUID) {
+      this.currentNewsUUID = this.uuidService.generate();
+    } else if (newsEntry.id !== oldNewsEntry.id) {
+      startReason = StartReason.PREV_SKIPPED;
+      await this.sendEndPlayStats(newsEntry, EndReason.SKIPPED);
+      this.currentNewsUUID = this.uuidService.generate();
     } else {
-      this.sendStartPlayStats(newsEntry, StartReason.RESUMED);
+      startReason = StartReason.RESUMED;
     }
 
-    this._playing.next(true);
+    return this.sendStartPlayStats(newsEntry, startReason);
   }
 
-  onPause(newsEntry: NewsEntry) {
-    this._playing.next(false);
-    this.sendEndPlayStats(newsEntry, EndReason.PAUSED);
+  async getNextNews(newsEntry: NewsEntry, newsEntries: NewsEntry[]) {
+    await this.sendEndPlayStats(newsEntry, EndReason.ENDED)
+
+    this.currentNewsUUID = this.uuidService.generate();
+
+    const newsEntryIndex: number = newsEntries.findIndex((entry: NewsEntry) => entry.id === newsEntry.id);
+
+    if (newsEntryIndex !== newsEntries.length - 1) {
+      await this.sendStartPlayStats(newsEntries[newsEntryIndex + 1], StartReason.PREV_ENDED);
+    }
+
+    return newsEntries[newsEntryIndex + 1];
   }
 
-  onChange(newsEntry: NewsEntry) {
-    this.sendEndPlayStats(this._currentNews.value, EndReason.SKIPPED);
-    this.currentNewsUUID = this.uuiService.generate();
-    this._currentNews.next(newsEntry);
-    this._playing.next(true);
+  pause(newsEntry: NewsEntry) {
+    return this.sendEndPlayStats(newsEntry, EndReason.PAUSED);
   }
 
-
-  sendStartPlayStats(newsEntry: NewsEntry, startReason: StartReason) {
+  async sendStartPlayStats(newsEntry: NewsEntry, startReason: StartReason) {
     const startPlayStat: StartPlayStat = {
       news_id: newsEntry.id,
       play_id: this.currentNewsUUID,
@@ -84,9 +82,15 @@ export class NewsService {
     };
 
     console.log(startPlayStat);
+    // return this.apiService.post('sendstartplaystats', startPlayStat)
+    //   .pipe(
+    //     first(),
+    //     tap(response => console.log(response))
+    //   )
+    //   .toPromise();
   }
 
-  sendEndPlayStats(newsEntry: NewsEntry, endReason: EndReason) {
+  async sendEndPlayStats(newsEntry: NewsEntry, endReason: EndReason) {
     const endPlayStat: EndPlayStat = {
       news_id: newsEntry.id,
       play_id: this.currentNewsUUID,
@@ -95,7 +99,11 @@ export class NewsService {
     };
 
     console.log(endPlayStat);
+    // return this.apiService.post('sendendplaystats', endPlayStat)
+    //   .pipe(
+    //     first(),
+    //     tap(response => console.log(response))
+    //   )
+    //   .toPromise();
   }
-
-
 }

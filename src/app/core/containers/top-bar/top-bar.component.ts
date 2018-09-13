@@ -4,8 +4,10 @@ import {NewsEntry} from '../../../news/types/news-entry';
 import {NewsService} from '../../../news/services/news.service';
 import {AuthService} from '../../../auth/auth.service';
 import {MatDialog} from '@angular/material';
-import {tap} from 'rxjs/operators';
 import {TopicsPageComponent} from '../../../topics-page/topics-page.component';
+import {select, Store} from '@ngrx/store';
+import * as newsStore from '../../../news/store';
+import * as fromRoot from '../../../store';
 
 @Component({
   selector: 'top-bar',
@@ -16,8 +18,9 @@ import {TopicsPageComponent} from '../../../topics-page/topics-page.component';
                     [newsEntries]="newsEntries$ | async"
                     [currentNews]="currentNews$ | async"
                     (pause)="onPause($event)"
-                    (change)="onChange($event)"
-                    (play)="onPlay($event)"></audio-player>
+                    (play)="onPlay($event)"
+                    (playNext)="onPlayNextNews($event)"
+                    (view)="onView($event)"></audio-player>
       <div class="user-menu">
         <button mat-icon-button class="main-button" [matMenuTriggerFor]="userMenu">
           <mat-icon class="big-icon">account_circle</mat-icon>
@@ -42,33 +45,36 @@ export class TopBarComponent implements OnInit {
   newsEntries$: Observable<NewsEntry[]>;
   currentNews$: Observable<NewsEntry>;
   playing$: Observable<boolean>;
-  loading: boolean;
+
   constructor(
+    private store: Store<newsStore.NewsState>,
     private newsService: NewsService,
     private authService: AuthService,
     private dialog: MatDialog
   ) { }
 
   ngOnInit() {
-    this.loading = true;
-    this.newsEntries$ = this.newsService.getNewsEntries()
-      .pipe(
-        tap(() => this.loading = false)
-      );
-    this.currentNews$ = this.newsService.currentNews;
-    this.playing$ = this.newsService.playing;
+    this.newsEntries$ = this.store.pipe(select(newsStore.selectAll));
+    this.currentNews$ = this.store.pipe(select(newsStore.selectCurrentNews));
+    this.playing$ = this.store.pipe(select(newsStore.selectNewsPlaying));
   }
 
   onPlay(event: NewsEntry) {
-    this.newsService.onPlay(event);
+    this.store.dispatch(new newsStore.PlayNews(event));
   }
 
   onPause(event: NewsEntry) {
-    this.newsService.onPause(event);
+    this.store.dispatch(new newsStore.PauseNews(event));
   }
 
-  onChange(event: NewsEntry) {
-    this.newsService.onChange(event);
+  onPlayNextNews(event: NewsEntry) {
+    this.store.dispatch(new newsStore.PlayNextNews(event));
+  }
+
+  onView(event: NewsEntry) {
+    this.store.dispatch(new fromRoot.Go({
+      path: ['/', 'news', event.id]
+    }));
   }
 
   onTopics() {

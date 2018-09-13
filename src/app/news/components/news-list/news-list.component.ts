@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {NewsEntry} from '../../types/news-entry';
 
 @Component({
@@ -11,7 +11,8 @@ import {NewsEntry} from '../../types/news-entry';
             [newsEntry]="newsEntry"
             [playing]="currentNews.id === newsEntry.id && playing"
             (play)="onPlay($event)"
-            (pause)="onPause()">
+            (pause)="onPause($event)"
+            (view)="onView($event)">
           </news-list-item>
         </div>
       </div>
@@ -20,16 +21,18 @@ import {NewsEntry} from '../../types/news-entry';
       </div>
     </div>
   `,
-  styleUrls: ['./news-list.component.scss']
+  styleUrls: ['./news-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewsListComponent implements OnInit {
   @Input() newsEntries: NewsEntry[];
   @Input() currentNews: NewsEntry;
   @Input() playing: boolean;
   @Input() loading: boolean;
+
   @Output() play: EventEmitter<NewsEntry> = new EventEmitter<NewsEntry>();
   @Output() pause: EventEmitter<any> = new EventEmitter();
-
+  @Output() view: EventEmitter<NewsEntry> = new EventEmitter();
   constructor() { }
 
   ngOnInit() {
@@ -41,6 +44,10 @@ export class NewsListComponent implements OnInit {
 
   onPause(event: NewsEntry) {
     this.pause.emit(event);
+  }
+
+  onView(event: NewsEntry) {
+    this.view.emit(event);
   }
 
   onScroll(event) {

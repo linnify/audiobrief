@@ -81,7 +81,7 @@ export class NewsService {
       start_reason: startReason
     };
 
-    console.log(startPlayStat);
+    // console.log(startPlayStat);
     // return this.apiService.post('sendstartplaystats', startPlayStat)
     //   .pipe(
     //     first(),
@@ -98,7 +98,7 @@ export class NewsService {
       end_reason: endReason
     };
 
-    console.log(endPlayStat);
+    // console.log(endPlayStat);
     // return this.apiService.post('sendendplaystats', endPlayStat)
     //   .pipe(
     //     first(),

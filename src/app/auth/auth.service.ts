@@ -4,6 +4,7 @@ import {AuthToken} from './types/auth-token';
 import {tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {ApiService} from '../shared/services/api.service';
+import {GrantType} from './types/grant-type';
 
 declare const gapi: any;
 
@@ -16,14 +17,16 @@ export class AuthService {
   constructor(
     private apiService: ApiService,
     private router: Router
-  ) { }
+  ) {
+    this.googleInit();
+  }
 
 
   loginWithUsernameAndPassword(username: string, password: string) {
     const body = {
       client_id: environment.clientId,
       client_secret: environment.clientSecret,
-      grant_type: 'password',
+      grant_type: GrantType.PASSWORD,
       username,
       password
     };
@@ -31,21 +34,20 @@ export class AuthService {
     return this.apiService.post('auth/token', body)
       .pipe(
         tap((credentials: any) => {
-          const authToken: AuthToken = {
-            accessToken: credentials.access_token,
-            expiresIn: credentials.expires_in,
-            refreshToken: credentials.refresh_token,
-            scope: credentials.scope,
-            tokenType: credentials.token_type
-          };
-
-          this.apiService.setAuthToken(authToken);
+          this.apiService.saveToken(credentials);
         })
       );
   }
 
   loginWithGoogle() {
-
+    if (typeof(this.gauth) === 'undefined') {
+      this.gauth = gapi.auth2.getAuthInstance();
+    }
+    if (!this.gauth.isSignedIn.get()) {
+      this.gauth.signIn().then(() => {
+        this.fetchGoogleUserDetails();
+      });
+    }
   }
 
   logout() {
@@ -53,11 +55,16 @@ export class AuthService {
     this.router.navigate(['/']);
   }
 
-  // private googleInit() {
-  //   gapi.load('auth2', () => {
-  //     this.gauth = gapi.auth2.init({
-  //
-  //     })
-  //   })
-  // }
+  fetchGoogleUserDetails() {
+    const currentUser = this.gauth.currentUser.get();
+    // console.log(currentUser);
+  }
+
+  private googleInit() {
+    gapi.load('auth2', () => {
+      this.gauth = gapi.auth2.init({
+        client_id: `${environment.clientId}.apps.googleusercontent.com`
+      });
+    });
+  }
 }

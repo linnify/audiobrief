@@ -55,7 +55,6 @@ export class NewsListItemComponent implements OnInit {
   }
 
   onView() {
-    console.log(this.newsEntry);
     this.view.emit(this.newsEntry);
   }
 }

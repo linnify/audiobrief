@@ -1,6 +1,6 @@
 export class AuthToken {
   accessToken: string;
-  expiresIn: number;
+  expiresAt: number;
   refreshToken: string;
   scope: string;
   tokenType: string;

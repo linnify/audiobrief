@@ -39,6 +39,7 @@ export class AudioPlayerComponent implements OnInit, OnChanges, AfterViewInit {
   progress: number = 0;
   currentNewsIndex: number;
   audio: HTMLAudioElement = new Audio();
+  playingTransaction: boolean = false;
 
   @Input() newsEntries: NewsEntry[];
   @Input() currentNews: NewsEntry;
@@ -76,7 +77,8 @@ export class AudioPlayerComponent implements OnInit, OnChanges, AfterViewInit {
       console.log(this.audio.duration);
     });
     this.audio.addEventListener('ended', () => {
-      this.playNext.emit(this.currentNews);
+      this.playTransactionOrNext();
+
     });
   }
 
@@ -115,5 +117,16 @@ export class AudioPlayerComponent implements OnInit, OnChanges, AfterViewInit {
 
   onView() {
     this.view.emit(this.currentNews);
+  }
+
+  private playTransactionOrNext() {
+    if (this.playingTransaction === false) {
+      this.audio.src = 'assets/transaction.mp3';
+      this.playingTransaction = true;
+      this.audio.play();
+    } else {
+      this.playingTransaction = false;
+      this.playNext.emit(this.currentNews);
+    }
   }
 }

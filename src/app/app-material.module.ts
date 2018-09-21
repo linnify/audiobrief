@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import {
   MatAutocompleteModule,
   MatButtonModule,
-  MatCardModule, MatDialogModule,
+  MatCardModule, MatChipsModule, MatDialogModule,
   MatDividerModule, MatExpansionModule,
   MatIconModule,
   MatInputModule, MatListModule, MatMenuModule, MatProgressBarModule,
@@ -26,7 +26,8 @@ import {
     MatMenuModule,
     MatDialogModule,
     MatTooltipModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatChipsModule
   ],
   exports: [
     MatAutocompleteModule,
@@ -44,7 +45,8 @@ import {
     MatMenuModule,
     MatDialogModule,
     MatTooltipModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatChipsModule
   ],
 })
 export class AppMaterialModule {}

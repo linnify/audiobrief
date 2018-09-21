@@ -81,13 +81,12 @@ export class NewsService {
       start_reason: startReason
     };
 
-    // console.log(startPlayStat);
-    // return this.apiService.post('sendstartplaystats', startPlayStat)
-    //   .pipe(
-    //     first(),
-    //     tap(response => console.log(response))
-    //   )
-    //   .toPromise();
+    return this.apiService.post('sendstartplaystats/', [startPlayStat])
+      .pipe(
+        first(),
+        tap(response => console.log(response))
+      )
+      .toPromise();
   }
 
   async sendEndPlayStats(newsEntry: NewsEntry, endReason: EndReason) {
@@ -98,12 +97,11 @@ export class NewsService {
       end_reason: endReason
     };
 
-    console.log(endPlayStat);
-    // return this.apiService.post('sendendplaystats', endPlayStat)
-    //   .pipe(
-    //     first(),
-    //     tap(response => console.log(response))
-    //   )
-    //   .toPromise();
+    return this.apiService.post('sendendplaystats/', [endPlayStat])
+      .pipe(
+        first(),
+        tap(response => console.log(response))
+      )
+      .toPromise();
   }
 }

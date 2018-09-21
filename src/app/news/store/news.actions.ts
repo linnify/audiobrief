@@ -16,6 +16,7 @@ export const PLAY_NEXT_NEWS = '[News] Play Next News';
 export const PLAY_NEXT_NEWS_SUCCESS = '[News] Play Next News Success';
 export const PLAY_NEXT_NEWS_FAIL = '[News] Play Next News Fail';
 
+
 export class LoadNews implements Action {
   readonly type = LOAD_NEWS;
   constructor() {}
@@ -75,6 +76,7 @@ export class PlayNextNewsFail implements Action {
   readonly type = PLAY_NEXT_NEWS_FAIL;
   constructor(public error: any) {}
 }
+
 export type NewsActions =
   | LoadNews
   | LoadNewsSuccess

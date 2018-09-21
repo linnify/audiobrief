@@ -58,6 +58,7 @@ export class ApiService {
     const token: string = this.authToken ? this.authToken.accessToken : null;
 
     if (token) {
+      console.log('here');
       return new HttpHeaders({
         'Authorization': 'Bearer ' + token,
         'Accept': `application/json; charset=utf-8`
@@ -88,7 +89,7 @@ export class ApiService {
       refresh_token: authToken.refreshToken
     };
 
-    return this.post('auth/token', body)
+    return this.http.post(this.baseUrl + '/' + 'auth/token', body)
       .pipe(
         first(),
         map((credentials: any) => {
@@ -106,6 +107,7 @@ export class ApiService {
 
   private getOptions(params: HttpParams | { [param: string]: string | string[]}) {
 
+    console.log(this.getHeaders());
     return {
       headers: this.getHeaders(),
       params

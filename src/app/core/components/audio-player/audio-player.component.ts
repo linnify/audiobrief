@@ -27,6 +27,9 @@ import {NewsEntry} from '../../../news/types/news-entry';
           <mat-icon class="medium-icon">skip_next</mat-icon>
         </button>
         <mat-progress-bar class="progress-bar-container" mode="determinate" [value]="progress"></mat-progress-bar>
+        <div class="audio-player__duration">
+          <span *ngIf="audio.duration">{{audio.duration | minuteSeconds}}</span>
+        </div>
       </div>
     </div>
   `,
@@ -35,7 +38,7 @@ import {NewsEntry} from '../../../news/types/news-entry';
 export class AudioPlayerComponent implements OnInit, OnChanges, AfterViewInit {
   progress: number = 0;
   currentNewsIndex: number;
-  private audio: HTMLAudioElement = new Audio();
+  audio: HTMLAudioElement = new Audio();
 
   @Input() newsEntries: NewsEntry[];
   @Input() currentNews: NewsEntry;
@@ -69,6 +72,9 @@ export class AudioPlayerComponent implements OnInit, OnChanges, AfterViewInit {
       this.progress = this.audio.currentTime * 100 / this.audio.duration;
     });
 
+    this.audio.addEventListener('loadmetadata', () => {
+      console.log(this.audio.duration);
+    });
     this.audio.addEventListener('ended', () => {
       this.playNext.emit(this.currentNews);
     });

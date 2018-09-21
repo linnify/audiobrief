@@ -7,13 +7,14 @@ import {months} from '../../../shared/constants';
   template: `    
     <div class="news-item" style="display: flex; align-items: center">
       <div class="image-container">
-        <img src="assets/tech-logo.jpg" class="logo">
+        <img *ngIf="newsEntry.source_new" src="{{newsEntry.source_new.logo_file}}" class="logo">
+        <img *ngIf="!newsEntry.source_new" src="assets/default_logo.png" class="logo">
       </div>
       <div style="width: 100%" >
         <div *ngIf="newsEntry" class="news-item__container" (click)="onView($event)">
           <div class="news-item__details">
             <div class="mat-title">{{newsEntry.title}}</div>
-            <div class="mat-subheading-2">{{newsEntry.topic}}</div>
+            <div class="mat-subheading-2 topic">{{newsEntry.topic}}</div>
             <div class="mat-subheading-1">{{getFormattedDate(newsEntry.date_published)}}</div>
           </div>
           <button mat-icon-button class="main-button">
@@ -56,5 +57,6 @@ export class NewsListItemComponent implements OnInit {
 
   onView() {
     this.view.emit(this.newsEntry);
+    this.play.emit(this.newsEntry);
   }
 }

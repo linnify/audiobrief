@@ -6,6 +6,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import {ScrollableDirective} from './directives/scrollable.directive';
 import { TextCopyDirective } from './directives/copy-url.directive';
+import { MinuteSecondsPipe } from './pipes/minute-seconds.pipe';
 
 @NgModule({
   imports: [
@@ -15,7 +16,7 @@ import { TextCopyDirective } from './directives/copy-url.directive';
     AppMaterialModule,
     HttpClientModule,
   ],
-  declarations: [NotFoundComponent, ScrollableDirective, TextCopyDirective],
+  declarations: [NotFoundComponent, ScrollableDirective, TextCopyDirective, MinuteSecondsPipe],
   exports: [
     FormsModule,
     ReactiveFormsModule,
@@ -23,7 +24,8 @@ import { TextCopyDirective } from './directives/copy-url.directive';
     HttpClientModule,
     NotFoundComponent,
     ScrollableDirective,
-    TextCopyDirective
+    TextCopyDirective,
+    MinuteSecondsPipe
   ]
 })
 export class SharedModule { }

@@ -61,9 +61,11 @@ export class AuthService {
   }
 
   private googleInit() {
-    gapi.load('auth2', () => {
+    gapi.load('client:auth2', () => {
       this.gauth = gapi.auth2.init({
-        client_id: `${environment.clientId}.apps.googleusercontent.com`
+        'apiKey': 'LeIxecREC_Xoo08druEk0png',
+        'clientId': '166531460892-jj4gna00tasi1514ni45olqslp8v3e7n.apps.googleusercontent.com',
+        'scope': 'profile'
       });
     });
   }

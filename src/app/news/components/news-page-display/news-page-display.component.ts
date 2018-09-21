@@ -8,8 +8,10 @@ import {NewsEntry} from '../../types/news-entry';
       <button mat-icon-button class="main-button" (click)="onClick()"><mat-icon class="big-icon">close</mat-icon></button>
     </div>
     <div *ngIf="!loading && newsEntry" class="news-page">
-      <div class="mat-display-1">
-        {{newsEntry.title}}
+      
+      <div class="mat-display-1 summary_title">
+        <img *ngIf="newsEntry.source_new" src="{{newsEntry.source_new.logo_file}}" class="logo">
+        <div>{{newsEntry.title}}</div>
       </div>
       <div class="mat-title">
         {{newsEntry.edited_summary}}

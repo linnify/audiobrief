@@ -98,7 +98,7 @@ export class NewsService {
       end_reason: endReason
     };
 
-    // console.log(endPlayStat);
+    console.log(endPlayStat);
     // return this.apiService.post('sendendplaystats', endPlayStat)
     //   .pipe(
     //     first(),

@@ -13,6 +13,8 @@ import { reducers, effects, CustomSerializer } from './store';
 import {RouterStateSerializer, StoreRouterConnectingModule} from '@ngrx/router-store';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+// import { AuthServiceConfig, GoogleLoginProvider, SocialLoginModule} from 'angularx-social-login';
+
 
 @NgModule({
   declarations: [
@@ -31,7 +33,13 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     environment.production === false ? StoreDevtoolsModule.instrument() : [],
 
   ],
-  providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }],
+  providers: [
+    {
+      provide: RouterStateSerializer,
+      useClass: CustomSerializer
+    },
+
+  ],
   entryComponents: [TopicsPageComponent],
   bootstrap: [AppComponent]
 })

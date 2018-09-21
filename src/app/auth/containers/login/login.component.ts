@@ -7,9 +7,9 @@ import {Router} from '@angular/router';
 @Component({
   selector: 'login',
   template: `
-    <login-form 
-      [loading]="loading" 
-      [errorMessage]="errorMessage" 
+    <login-form
+      [loading]="loading"
+      [errorMessage]="errorMessage"
       (login)="onLogin($event)"
       (loginWithGoogle)="onLoginWithGoogle()"></login-form>
   `,
@@ -41,6 +41,8 @@ export class LoginComponent implements OnInit {
   }
 
   onLoginWithGoogle() {
-    this.authService.loginWithGoogle();
+    this.authService.loginWithGoogle()
+      .then(() => this.router.navigate(['news']))
+      .catch(error => console.log(error));
   }
 }

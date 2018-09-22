@@ -31,7 +31,7 @@ export class TopicsService {
     const body = {
       suggested_topic: suggestions
     };
-    return this.apiService.post('suggesttopic', body)
+    return this.apiService.post('suggesttopic/', body)
       .pipe(first()).toPromise();
   }
 }

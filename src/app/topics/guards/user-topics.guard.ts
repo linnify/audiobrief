@@ -26,6 +26,7 @@ export class UserTopicsGuard implements CanActivate {
       .toPromise()
       .then((tagTopics: TagTopic[]) =>
         this.store.dispatch(new fromTopics.LoadUserTopicsSuccess(tagTopics)))
-      .then(() => true);
+      .then(() => true)
+      .catch(() => false);
   }
 }

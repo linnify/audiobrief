@@ -28,8 +28,6 @@ export class AuthService {
       username,
       password
     };
-
-    console.log('here');
     return this.apiService.post('auth/token', body)
       .pipe(
         tap((credentials: any) => this.apiService.saveToken(credentials))
@@ -60,17 +58,19 @@ export class AuthService {
   }
 
   private googleInit() {
-    const clientLocalhost = '166531460892-5ti7h7jkrqtdmjq1ipiet62j1djqnber.apps.googleusercontent.com';
-    const clientLocalSecret = 'wGwzFTxzZdfJUvfw7xtHAEWt';
+
+    // Local
+    // const clientLocalhost = '166531460892-5ti7h7jkrqtdmjq1ipiet62j1djqnber.apps.googleusercontent.com';
+    // const clientLocalSecret = 'wGwzFTxzZdfJUvfw7xtHAEWt';
+
+    // Audio breef
     // const clientLocalhost = '166531460892-7ha1ba0lph7odl8b9ttumnid49parkjh.apps.googleusercontent.com';
     // const clientLocalSecret = 'ygTgGK6IdHwec4_4SoMD1GhO';
-    /**
-     * clientIdFirebase = 166531460892-0fjvj3aj7dv66gfg8il355cjn379eqeu.apps.googleusercontent.com
-       clientSecretFirebase = hkbpfwIUrtWihamj4XOeOrD1
 
-        clientIdAudioBreef.news = 166531460892-7ha1ba0lph7odl8b9ttumnid49parkjh.apps.googleusercontent.com
-        clientSecretAudioBreef.news = ygTgGK6IdHwec4_4SoMD1GhO
-     */
+    // Firebase
+    const clientLocalhost = '166531460892-0fjvj3aj7dv66gfg8il355cjn379eqeu.apps.googleusercontent.com';
+    const clientLocalSecret = 'hkbpfwIUrtWihamj4XOeOrD1';
+
     gapi.load('auth2', () => {
       gapi.auth2.init({
         'apiKey': clientLocalSecret,

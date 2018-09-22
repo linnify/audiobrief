@@ -4,10 +4,12 @@ import {NewsEntry} from '../../../news/types/news-entry';
 import {NewsService} from '../../../news/services/news.service';
 import {AuthService} from '../../../auth/auth.service';
 import {MatDialog} from '@angular/material';
-import {TopicsPageComponent} from '../../../topics-page/topics-page.component';
+import {TopicsPageComponent} from '../../../topics/containers/topics-page/topics-page.component';
 import {select, Store} from '@ngrx/store';
 import * as newsStore from '../../../news/store';
+import * as topicsStore from '../../../topics/store';
 import * as fromRoot from '../../../store';
+import {Topic} from '../../../topics/types/topic';
 
 @Component({
   selector: 'top-bar',
@@ -45,6 +47,7 @@ export class TopBarComponent implements OnInit {
   newsEntries$: Observable<NewsEntry[]>;
   currentNews$: Observable<NewsEntry>;
   playing$: Observable<boolean>;
+  topics$: Observable<Topic[]>;
 
   constructor(
     private store: Store<newsStore.NewsState>,

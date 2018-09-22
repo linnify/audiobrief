@@ -46,19 +46,18 @@ export class ApiService {
     return false;
   }
 
-  get(path: string, params?: HttpParams | { [param: string]: string | string[]}) {
-    return this.http.get(this.baseUrl + '/' + path, this.getOptions(params));
+  get<T>(path: string, params?: HttpParams | { [param: string]: string | string[]}) {
+    return this.http.get<T>(this.baseUrl + '/' + path, this.getOptions(params));
   }
 
-  post(path: string, body: any | null, params?: HttpParams | { [param: string]: string | string[]}) {
-    return this.http.post(this.baseUrl + '/' + path, body, this.getOptions(params));
+  post<T>(path: string, body: any | null, params?: HttpParams | { [param: string]: string | string[]}) {
+    return this.http.post<T>(this.baseUrl + '/' + path, body, this.getOptions(params));
   }
 
   private getHeaders(): HttpHeaders {
     const token: string = this.authToken ? this.authToken.accessToken : null;
 
     if (token) {
-      console.log('here');
       return new HttpHeaders({
         'Authorization': 'Bearer ' + token,
         'Accept': `application/json; charset=utf-8`
@@ -106,8 +105,6 @@ export class ApiService {
   }
 
   private getOptions(params: HttpParams | { [param: string]: string | string[]}) {
-
-    console.log(this.getHeaders());
     return {
       headers: this.getHeaders(),
       params

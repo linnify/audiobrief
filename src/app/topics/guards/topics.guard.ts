@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import {Observable, of} from 'rxjs';
-import {select, Store} from '@ngrx/store';
+import { Observable, of } from 'rxjs';
+import { select, Store } from '@ngrx/store';
 import * as fromTopics from '../../topics/store';
-import {catchError, switchMap, take, tap} from 'rxjs/operators';
+import { catchError, switchMap, take, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

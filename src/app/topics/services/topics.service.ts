@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {ApiService} from '../../shared/services/api.service';
 import {Observable} from 'rxjs';
 import {first, map} from 'rxjs/operators';
-import {Topic} from '../types/topic';
+import {TagTopic, Topic} from '../types/topic';
 
 @Injectable({
   providedIn: 'root'
@@ -14,19 +14,24 @@ export class TopicsService {
   ) { }
 
   getTopics(): Observable<Topic[]> {
+    return this.apiService.get<Topic[]>('topics');
+  }
 
-    return this.apiService.get('topics')
-      .pipe(
-        map((receivedTopics: Topic[]) => {
-          console.log(receivedTopics);
+  getUserTagsTopics(): Observable<TagTopic[]> {
+    return this.apiService.get<TagTopic[]>('gettagstopics/');
+  }
 
-          return receivedTopics;
-        })
-      );
+  saveTopics(topics: TagTopic[]): Promise<TagTopic[]> {
+    return this.apiService.post<TagTopic[]>('savetagstopics/', topics)
+      .pipe(first())
+      .toPromise();
   }
 
   suggestTopics(suggestions: string): Promise<any> {
-    return this.apiService.post('suggesttopic', suggestions)
+    const body = {
+      suggested_topic: suggestions
+    };
+    return this.apiService.post('suggesttopic', body)
       .pipe(first()).toPromise();
   }
 }

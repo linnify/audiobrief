@@ -22,6 +22,7 @@
 
 
 .mat-title {
+  font-size: 17px;
   margin-bottom: $typography-margin;
   color: #4A4A4B;
 }
@@ -40,6 +41,10 @@
 .image-container {
   width: $medium-image-size;
   padding-right: $big-margin;
+}
+
+.playing {
+  background-color: aliceblue;
 }
 
 @media screen and (max-width: 480px) {

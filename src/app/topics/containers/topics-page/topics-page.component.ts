@@ -1,32 +1,62 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
 import {select, Store} from '@ngrx/store';
 import * as topicsStore from '../../../topics/store';
-import {Topic} from '../../types/topic';
+import {TagTopic, Topic} from '../../types/topic';
 import {Observable} from 'rxjs';
+import {TopicsService} from '../../services/topics.service';
 
 @Component({
   selector: 'topics-page',
   template: `
-    <topics-page-display [topics]="topics$ | async"></topics-page-display>
+    <topics-page-display
+      [topics]="topics$ | async"
+      [defaultSelectedIds]="selectedTopicsIds$ | async"
+      (submit)="onSubmit($event)"
+    ></topics-page-display>
   `,
   styleUrls: ['./topics-page.component.scss']
 })
 export class TopicsPageComponent implements OnInit {
 
   topics$: Observable<Topic[]>;
+  selectedTopicsIds$: Observable<number[]>;
 
   constructor(
-    public dialogRef: MatDialogRef<TopicsPageComponent>,
+    private topicsService: TopicsService,
+    private dialogRef: MatDialogRef<TopicsPageComponent>,
     private store: Store<topicsStore.TopicsState>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    private snackBarService: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA) private data: any
   ) { }
 
   ngOnInit() {
     this.topics$ = this.store.pipe(select(topicsStore.selectAll));
+    this.selectedTopicsIds$ = this.store.pipe(select(topicsStore.selectSelectedTopicsIds));
   }
 
-  onSubmitTopics() {
+  onSubmit(result: {topics: TagTopic[], suggestions: string} ) {
+    const { topics, suggestions } = result;
+    if (topics.length > 0 && suggestions && suggestions.length > 0) {
+      return this.topicsService.suggestTopics(suggestions)
+        .then(() => this.topicsService.saveTopics(topics))
+        .then((response: TagTopic[]) => this.store.dispatch( new topicsStore.LoadUserTopicsSuccess(response)))
+        .then(() => this.success('Topics were saved and we get your suggestion'));
+    }
+    if (topics.length > 0) {
+      return this.topicsService.saveTopics(topics)
+        .then((response: TagTopic[]) => this.store.dispatch( new topicsStore.LoadUserTopicsSuccess(response)))
+        .then(() => this.success('We updated your topics'));
+    }
+    if (suggestions && suggestions.length > 0) {
+      return this.topicsService.saveTopics(topics)
+        .then(() => this.success('We get your suggestions'));
+    }
+
+  }
+
+  private success(text: string) {
+    this.snackBarService.open(text, 'Dismiss', { duration: 3000 });
     this.dialogRef.close();
   }
 }

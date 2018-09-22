@@ -10,11 +10,13 @@ export const topicsAdapter = createEntityAdapter<Topic>({
 export interface TopicsState extends EntityState<Topic> {
   loading: boolean;
   loaded: boolean;
+  selectedTopicsIds: number[];
 }
 
 export const initialState: TopicsState = topicsAdapter.getInitialState({
   loading: false,
-  loaded: false
+  loaded: false,
+  selectedTopicsIds: [],
 });
 
 export function reducer(
@@ -36,6 +38,13 @@ export function reducer(
         loaded: true
       });
     }
+    case topicsActions.LOAD_USER_TOPICS_SUCCESS: {
+      const selectedTopicsIds: number[] = action.tagTopics.map(topic => topic.topic_id);
+      return {
+        ...state,
+        selectedTopicsIds
+      };
+    }
     default:
       return state;
   }
@@ -51,4 +60,9 @@ export const selectTopicsLoading = createSelector(
 export const selectTopicsLoaded = createSelector(
   selectTopicsState,
   (state: TopicsState) => state.loaded
+);
+
+export const selectSelectedTopicsIds = createSelector(
+  selectTopicsState,
+  (state: TopicsState) => state.selectedTopicsIds
 );

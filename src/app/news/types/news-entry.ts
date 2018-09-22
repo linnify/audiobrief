@@ -18,4 +18,5 @@ export class NewsEntry {
   topic: string;
   mp3_file: string;
   uploader: number;
+  source_new?: any;
 }

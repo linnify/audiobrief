@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Topic} from '../../types/topic';
+import {TagTopic, Topic} from '../../types/topic';
 
 @Component({
   selector: 'topics-page-display',
@@ -40,11 +40,12 @@ import {Topic} from '../../types/topic';
   `,
   styleUrls: ['./topics-page-display.component.scss']
 })
-export class TopicsPageDisplayComponent implements OnInit, AfterViewInit {
+export class TopicsPageDisplayComponent implements OnInit {
 
   @Input() topics: Topic[];
-  @Output() submitTopics: EventEmitter<Topic[]> = new EventEmitter<Topic[]>();
-  @Output() suggestTopics: EventEmitter<string> = new EventEmitter<string>();
+  @Input() defaultSelectedIds: number[];
+  @Output() submit = new EventEmitter<{topics: TagTopic[], suggestions: string}>();
+  @Output() suggestTopics = new EventEmitter<string>();
 
   selectedTopicsIds: number[] = [];
 
@@ -53,10 +54,8 @@ export class TopicsPageDisplayComponent implements OnInit, AfterViewInit {
   constructor() { }
 
   ngOnInit() {
-  }
-
-  ngAfterViewInit() {
-
+    console.log(this.selectedTopicsIds);
+    this.selectedTopicsIds = [...this.defaultSelectedIds];
   }
 
   selectChip(topicId: number) {
@@ -64,7 +63,7 @@ export class TopicsPageDisplayComponent implements OnInit, AfterViewInit {
     if (topicIndex > -1) {
       this.selectedTopicsIds.splice(topicIndex, 1);
     } else {
-      this.selectedTopicsIds.push(topicIndex);
+      this.selectedTopicsIds.push(topicId);
     }
   }
 
@@ -73,7 +72,10 @@ export class TopicsPageDisplayComponent implements OnInit, AfterViewInit {
   }
 
   onSubmitTopics() {
-    this.submitTopics.emit();
-    this.suggestTopics.emit();
+    const submitTopics: TagTopic[] = this.selectedTopicsIds.map(id => ({ topic_id: id }));
+    this.submit.emit({
+      suggestions: this.suggestions,
+      topics: submitTopics
+    });
   }
 }

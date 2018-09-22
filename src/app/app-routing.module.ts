@@ -6,6 +6,7 @@ import {UserExistsGuard} from './core/guards/user-exists.guard';
 import {TopBarComponent} from './core/containers/top-bar/top-bar.component';
 import {NewsGuard} from './news/guards/news.guard';
 import {TopicsGuard} from './topics/guards/topics.guard';
+import {UserTopicsGuard} from './topics/guards/user-topics.guard';
 
 const routes: Routes = [{
   path: '',
@@ -20,7 +21,7 @@ const routes: Routes = [{
     children: [
       {
         path: 'news',
-        canActivate: [TopicsGuard, NewsGuard],
+        canActivate: [TopicsGuard, UserTopicsGuard, NewsGuard ],
         loadChildren: './news/news.module#NewsModule'
       },
     ]

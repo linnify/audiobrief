@@ -4,8 +4,8 @@ import {months} from '../../../shared/constants';
 
 @Component({
   selector: 'news-list-item',
-  template: `    
-    <div class="news-item" style="display: flex; align-items: center">
+  template: `
+    <div class="news-item" style="display: flex; align-items: center" [ngClass]="{'playing' : playing}">
       <div class="image-container">
         <img *ngIf="newsEntry.source_new" src="{{newsEntry.source_new.logo_file}}" class="logo">
         <img *ngIf="!newsEntry.source_new" src="assets/default_logo.png" class="logo">
@@ -17,10 +17,15 @@ import {months} from '../../../shared/constants';
             <div class="mat-subheading-2 topic">{{newsEntry.topic}}</div>
             <div class="mat-subheading-1">{{getFormattedDate(newsEntry.date_published)}}</div>
           </div>
-          <button mat-icon-button class="main-button">
-            <mat-icon class="big-icon" *ngIf="!playing" (click)="onPlay(); $event.stopPropagation()">play_circle_filled_white</mat-icon>
-            <mat-icon class="big-icon" *ngIf="playing" (click)="onPause(); $event.stopPropagation()">pause_circle_filled</mat-icon>
-          </button>
+          <div style="display: flex">
+            <button mat-icon-button class="main-button">
+              <mat-icon class="big-icon" *ngIf="!playing" (click)="onPlay(); $event.stopPropagation()">play_circle_filled_white</mat-icon>
+              <mat-icon class="big-icon" *ngIf="playing" (click)="onPause(); $event.stopPropagation()">pause_circle_filled</mat-icon>
+            </button>
+            <button mat-icon-button class="main-button" (click)="$event.stopPropagation()" [text-copy]="newsEntry.url">
+              <mat-icon class="big-icon">share</mat-icon>
+            </button>
+          </div>
         </div>
         <mat-divider></mat-divider>
       </div>

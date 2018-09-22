@@ -55,8 +55,8 @@ export class NewsService {
     return this.sendStartPlayStats(newsEntry, startReason);
   }
 
-  async getNextNews(newsEntry: NewsEntry, newsEntries: NewsEntry[]) {
-    await this.sendEndPlayStats(newsEntry, EndReason.ENDED)
+  async setStatsNextNews(newsEntry: NewsEntry, newsEntries: NewsEntry[]): Promise<void> {
+    await this.sendEndPlayStats(newsEntry, EndReason.ENDED);
 
     this.currentNewsUUID = this.uuidService.generate();
 
@@ -65,8 +65,11 @@ export class NewsService {
     if (newsEntryIndex !== newsEntries.length - 1) {
       await this.sendStartPlayStats(newsEntries[newsEntryIndex + 1], StartReason.PREV_ENDED);
     }
+  }
 
-    return newsEntries[newsEntryIndex + 1];
+  getNextNews(newsEntry: NewsEntry, newsEntries: NewsEntry[]): Promise<NewsEntry> {
+    const newsEntryIndex: number = newsEntries.findIndex((entry: NewsEntry) => entry.id === newsEntry.id);
+    return Promise.resolve(newsEntries[newsEntryIndex + 1]);
   }
 
   pause(newsEntry: NewsEntry) {

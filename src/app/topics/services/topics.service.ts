@@ -14,7 +14,7 @@ export class TopicsService {
   ) { }
 
   getTopics(): Observable<Topic[]> {
-    return this.apiService.get<Topic[]>('topics');
+    return this.apiService.get<Topic[]>('topics/');
   }
 
   getUserTagsTopics(): Observable<TagTopic[]> {

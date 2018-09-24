@@ -22,7 +22,7 @@ export class NewsService {
 
   getNewsEntries(): Observable<NewsEntry[]> {
 
-    return this.apiService.get('mynews')
+    return this.apiService.get('mynews/')
       .pipe(
         map((receivedNews: any[]) => {
           const newsEntries: NewsEntry[] =

@@ -4,7 +4,7 @@ import {TagTopic, Topic} from '../../types/topic';
 @Component({
   selector: 'topics-page-display',
   template: `
-    <div style="height: 500px; width: 500px">
+    <div class="topics-dimension">
       <div class="topics-display-container">
         <h2>Topics</h2>
         <div>
@@ -54,7 +54,6 @@ export class TopicsPageDisplayComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.selectedTopicsIds);
     this.selectedTopicsIds = [...this.defaultSelectedIds];
   }
 

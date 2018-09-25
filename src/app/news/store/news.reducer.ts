@@ -44,15 +44,15 @@ export function reducer(
     case newsActions.PLAY_NEXT_NEWS:
     case newsActions.PLAY_NEWS: {
       return {
-        ...state,
-        playing: true
+        ...state
       };
     }
     case newsActions.PLAY_NEXT_NEWS_SUCCESS:
     case newsActions.PLAY_NEWS_SUCCESS: {
       return {
         ...state,
-        currentNews: action.payload
+        currentNews: action.payload,
+        playing: true
       };
     }
     case newsActions.PAUSE_NEWS: {

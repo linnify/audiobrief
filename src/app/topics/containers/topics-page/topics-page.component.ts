@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
 import {select, Store} from '@ngrx/store';
 import * as topicsStore from '../../../topics/store';
+import * as fromNews from '../../../news/store';
 import {TagTopic, Topic} from '../../types/topic';
 import {Observable} from 'rxjs';
 import {TopicsService} from '../../services/topics.service';
@@ -26,6 +27,7 @@ export class TopicsPageComponent implements OnInit {
     private topicsService: TopicsService,
     private dialogRef: MatDialogRef<TopicsPageComponent>,
     private store: Store<topicsStore.TopicsState>,
+    private newsStore: Store<fromNews.NewsState>,
     private snackBarService: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) private data: any
   ) { }
@@ -41,11 +43,13 @@ export class TopicsPageComponent implements OnInit {
       return this.topicsService.suggestTopics(suggestions)
         .then(() => this.topicsService.saveTopics(topics))
         .then((response: TagTopic[]) => this.store.dispatch( new topicsStore.LoadUserTopicsSuccess(response)))
+        .then(() => this.store.dispatch( new fromNews.LoadNews()))
         .then(() => this.success('Topics were saved and we get your suggestion'));
     }
     if (topics.length > 0) {
       return this.topicsService.saveTopics(topics)
         .then((response: TagTopic[]) => this.store.dispatch( new topicsStore.LoadUserTopicsSuccess(response)))
+        .then(() => this.store.dispatch( new fromNews.LoadNews()))
         .then(() => this.success('We updated your topics'));
     }
     if (suggestions && suggestions.length > 0) {

@@ -9,13 +9,18 @@ import {TopicsGuard} from './topics/guards/topics.guard';
 import {UserTopicsGuard} from './topics/guards/user-topics.guard';
 
 const routes: Routes = [{
-  path: '',
-  pathMatch: 'full',
-  canActivate: [UserExistsGuard],
-  loadChildren: './auth/auth.module#AuthModule'
-},
-  {
     path: '',
+    pathMatch: 'full',
+    redirectTo: 'app'
+  },
+  {
+    path: 'app',
+    pathMatch: 'full',
+    canActivate: [UserExistsGuard],
+    loadChildren: './auth/auth.module#AuthModule'
+  },
+  {
+    path: 'app',
     component: TopBarComponent,
     canActivate: [AuthenticatedGuard],
     children: [

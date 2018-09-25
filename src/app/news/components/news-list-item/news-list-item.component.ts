@@ -14,7 +14,7 @@ import {months} from '../../../shared/constants';
         <div *ngIf="newsEntry" class="news-item__container" (click)="onView($event)">
           <div class="news-item__details">
             <div class="mat-title">{{newsEntry.title}}</div>
-            <div class="mat-subheading-2 topic">{{newsEntry.topic}}</div>
+            <div class="mat-subheading-2 topic" [ngStyle]="{'background-color': newsEntry.topic.color}">{{newsEntry.topic.label}}</div>
             <div class="mat-subheading-1">{{getFormattedDate(newsEntry.date_published)}}</div>
           </div>
           <div style="display: flex">

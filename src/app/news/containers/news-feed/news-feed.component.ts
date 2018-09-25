@@ -51,7 +51,7 @@ export class NewsFeedComponent implements OnInit {
 
   onView(event: NewsEntry) {
     this.store.dispatch(new fromRoot.Go({
-      path: ['/', 'news', event.id]
+      path: ['/', 'app', 'news', event.id]
     }));
   }
 }

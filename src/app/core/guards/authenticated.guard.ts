@@ -19,7 +19,7 @@ export class AuthenticatedGuard implements CanActivate {
     return this.apiService.isAuthenticated()
       .then((authenticated: boolean) => {
           if (!authenticated) {
-            this.router.navigate(['/']);
+            this.router.navigate(['app']);
           }
 
           return true;

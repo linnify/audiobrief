@@ -87,7 +87,7 @@ export class NewsService {
     return this.apiService.post('sendstartplaystats/', [startPlayStat])
       .pipe(
         first(),
-        tap(response => console.log(response))
+        // tap(response => console.log(response))
       )
       .toPromise();
   }
@@ -103,7 +103,7 @@ export class NewsService {
     return this.apiService.post('sendendplaystats/', [endPlayStat])
       .pipe(
         first(),
-        tap(response => console.log(response))
+        // tap(response => console.log(response))
       )
       .toPromise();
   }

@@ -6,4 +6,5 @@ export class TagTopic {
 export class Topic {
   id: number;
   label: string;
+  color: string;
 }

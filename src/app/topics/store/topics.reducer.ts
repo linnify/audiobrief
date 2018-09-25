@@ -4,7 +4,7 @@ import {createFeatureSelector, createSelector} from '@ngrx/store';
 import {Topic} from '../types/topic';
 
 export const topicsAdapter = createEntityAdapter<Topic>({
-  selectId: (topic: any) => topic.id
+  selectId: (topic: any) => topic.label
 });
 
 export interface TopicsState extends EntityState<Topic> {

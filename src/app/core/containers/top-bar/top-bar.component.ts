@@ -7,7 +7,6 @@ import {MatDialog} from '@angular/material';
 import {TopicsPageComponent} from '../../../topics/containers/topics-page/topics-page.component';
 import {select, Store} from '@ngrx/store';
 import * as newsStore from '../../../news/store';
-import * as topicsStore from '../../../topics/store';
 import * as fromRoot from '../../../store';
 import {Topic} from '../../../topics/types/topic';
 
@@ -81,7 +80,19 @@ export class TopBarComponent implements OnInit {
   }
 
   onTopics() {
-    const dialogRef = this.dialog.open(TopicsPageComponent);
+    const config = {
+      position: {
+        top: '10px',
+        right: '10px'
+      },
+      height: '98%',
+      width: '100vw',
+      panelClass: 'full-screen-modal',
+    };
+    const dialogRef = this.dialog.open(TopicsPageComponent, {
+        panelClass: 'my-test-class'
+      }
+    );
 
     dialogRef.afterClosed().subscribe(result => {
     });

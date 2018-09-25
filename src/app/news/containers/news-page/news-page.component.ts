@@ -52,6 +52,8 @@ export class NewsPageComponent implements OnInit {
   }
 
   onClose() {
-    this.store.dispatch(new fromRoot.Back());
+    this.store.dispatch(new fromRoot.Go({
+      path: ['app', 'news']
+    }));
   }
 }

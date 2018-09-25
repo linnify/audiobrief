@@ -12,13 +12,15 @@ import {TagTopic} from '../types/topic';
 export class TopicsEffects {
 
   @Effect()
-  loadNews$: Observable<Action> = this.actions$
+  loadTopics$: Observable<Action> = this.actions$
     .pipe(
       ofType(topicsActions.LOAD_TOPICS),
       switchMap((action: topicsActions.LoadTopics) => {
         return this.topicsService.getTopics()
           .pipe(
-            map((topics: any[]) => new topicsActions.LoadTopicsSuccess(topics)),
+            map((topics: any[]) => {
+              return new topicsActions.LoadTopicsSuccess(topics);
+            }),
             catchError(error => of(new topicsActions.LoadTopicsFail(error)))
           );
       })

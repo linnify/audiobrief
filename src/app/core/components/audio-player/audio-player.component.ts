@@ -10,7 +10,7 @@ import {NewsEntry} from '../../../news/types/news-entry';
           {{currentNews.title}}
         </div>
         <div class="mat-caption audio-player__text-topics">
-          {{currentNews.topic}}
+          {{currentNews.topic.label}}
         </div>
       </div>
       <div class="audio-player__buttons">
@@ -73,12 +73,8 @@ export class AudioPlayerComponent implements OnInit, OnChanges, AfterViewInit {
       this.progress = this.audio.currentTime * 100 / this.audio.duration;
     });
 
-    this.audio.addEventListener('loadmetadata', () => {
-      console.log(this.audio.duration);
-    });
     this.audio.addEventListener('ended', () => {
       this.playTransactionOrNext();
-
     });
   }
 

@@ -19,6 +19,8 @@ export const PLAY_NEXT_NEWS_FAIL = '[News] Play Next News Fail';
 export const SEND_PLAY_NEWS_STATS_SUCCESS = '[News] Send Play News Stats Success';
 export const SEND_PLAY_NEWS_STATS_FAIL = '[News] Send Play News Stats Fail';
 
+export const STOP_PLAYER = '[News] Stop Player';
+
 export class LoadNews implements Action {
   readonly type = LOAD_NEWS;
   constructor() {}
@@ -88,7 +90,10 @@ export class SendPlayNewsStatsFail implements Action {
   constructor(public error: any) {}
 }
 
-
+export class StopPlayer implements Action {
+  readonly type = STOP_PLAYER;
+  constructor() {}
+}
 export type NewsActions =
   | LoadNews
   | LoadNewsSuccess
@@ -103,4 +108,5 @@ export type NewsActions =
   | PlayNextNewsSuccess
   | PlayNextNewsFail
   | SendPlayNewsStatsSuccess
-  | SendPlayNewsStatsFail;
+  | SendPlayNewsStatsFail
+  | StopPlayer;

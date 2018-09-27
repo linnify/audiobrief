@@ -9,11 +9,14 @@ import {NewsEntry} from '../../types/news-entry';
         <div  class="list-item" *ngFor="let newsEntry of newsEntries">
           <news-list-item
             [newsEntry]="newsEntry"
-            [playing]="currentNews.id === newsEntry.id && playing"
+            [playing]="currentNews && currentNews.id === newsEntry.id && playing"
             (play)="onPlay($event)"
             (pause)="onPause($event)"
             (view)="onView($event)">
           </news-list-item>
+        </div>
+        <div class="mat-headline empty-list" *ngIf="newsEntries.length == 0">
+          No more news, try tomorrow.
         </div>
       </div>
       <div *ngIf="loading || (!newsEntries && !loading)" class="spinner">

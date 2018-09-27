@@ -13,7 +13,7 @@ $audionews-app-theme: mat-light-theme($audionews-app-primary, $audionews-app-acc
 $grey-color: map_get($mat-grey, 500);
 $main-color: #2f64ac;
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 1000px) {
 
   .my-test-class  {
     max-width: none !important;

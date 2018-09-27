@@ -13,6 +13,7 @@ import { reducers, effects, CustomSerializer } from './store';
 import {RouterStateSerializer, StoreRouterConnectingModule} from '@ngrx/router-store';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {globalLogoutMetaReducer} from './store/reducers/logout.reducer';
 // import { AuthServiceConfig, GoogleLoginProvider, SocialLoginModule} from 'angularx-social-login';
 
 
@@ -26,7 +27,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     AppRoutingModule,
     SharedModule,
     CoreModule,
-    StoreModule.forRoot(reducers, {}),
+    StoreModule.forRoot(reducers, { metaReducers: [globalLogoutMetaReducer] }),
     EffectsModule.forRoot(effects),
     StoreRouterConnectingModule,
     environment.production === false ? StoreDevtoolsModule.instrument() : [],

@@ -61,6 +61,7 @@ export function reducer(
         playing: false
       };
     }
+    case newsActions.STOP_PLAYER:
     case newsActions.PLAY_NEXT_NEWS_FAIL:
     case newsActions.PLAY_NEWS_FAIL:
       return {

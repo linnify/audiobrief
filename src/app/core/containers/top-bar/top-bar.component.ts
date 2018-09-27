@@ -9,6 +9,7 @@ import {select, Store} from '@ngrx/store';
 import * as newsStore from '../../../news/store';
 import * as fromRoot from '../../../store';
 import {Topic} from '../../../topics/types/topic';
+import {Logout} from '../../../store';
 
 @Component({
   selector: 'top-bar',
@@ -75,7 +76,7 @@ export class TopBarComponent implements OnInit {
 
   onView(event: NewsEntry) {
     this.store.dispatch(new fromRoot.Go({
-      path: ['/', 'news', event.id]
+      path: ['app', 'news', event.id]
     }));
   }
 
@@ -99,6 +100,8 @@ export class TopBarComponent implements OnInit {
   }
 
   onLogout() {
+    this.store.dispatch(new newsStore.StopPlayer());
+    this.store.dispatch(new Logout());
     this.authService.logout();
   }
 }

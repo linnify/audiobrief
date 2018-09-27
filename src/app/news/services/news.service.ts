@@ -69,7 +69,10 @@ export class NewsService {
 
   getNextNews(newsEntry: NewsEntry, newsEntries: NewsEntry[]): Promise<NewsEntry> {
     const newsEntryIndex: number = newsEntries.findIndex((entry: NewsEntry) => entry.id === newsEntry.id);
-    return Promise.resolve(newsEntries[newsEntryIndex + 1]);
+    if (newsEntryIndex !== newsEntries.length - 1) {
+      return Promise.resolve(newsEntries[newsEntryIndex + 1]);
+    }
+    return Promise.resolve(null);
   }
 
   pause(newsEntry: NewsEntry) {
@@ -84,6 +87,7 @@ export class NewsService {
       start_reason: startReason
     };
 
+    console.log(startPlayStat);
     return this.apiService.post('sendstartplaystats/', [startPlayStat])
       .pipe(
         first(),
@@ -100,6 +104,7 @@ export class NewsService {
       end_reason: endReason
     };
 
+    console.log(endPlayStat);
     return this.apiService.post('sendendplaystats/', [endPlayStat])
       .pipe(
         first(),

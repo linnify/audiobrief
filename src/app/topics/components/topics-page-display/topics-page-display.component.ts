@@ -30,7 +30,11 @@ import {TagTopic, Topic} from '../../types/topic';
             <textarea style="background-color:#efefef" [(ngModel)]="suggestions" matInput matTextareaAutosize matAutosizeMinRows="3">
             </textarea>
           </mat-form-field>
-
+        </div>
+        <div>
+          <div>Hide already listened news</div>
+          <mat-slide-toggle color="primary" [checked]="preferences && preferences.hide_listened_and_skipped" 
+                            (change)="onChangePreferences($event)"></mat-slide-toggle>
         </div>
         <div style="display: flex; justify-content: flex-end; padding-top: 17px;">
           <button mat-raised-button type="button" color="primary" (click)="onSubmitTopics()" >Save</button>
@@ -44,9 +48,10 @@ export class TopicsPageDisplayComponent implements OnInit {
 
   @Input() topics: Topic[];
   @Input() defaultSelectedIds: number[];
+  @Input() preferences: any;
   @Output() submit = new EventEmitter<{topics: TagTopic[], suggestions: string}>();
   @Output() suggestTopics = new EventEmitter<string>();
-
+  @Output() changePreferences = new EventEmitter<any>();
   selectedTopicsIds: number[] = [];
 
   suggestions: string;
@@ -76,5 +81,9 @@ export class TopicsPageDisplayComponent implements OnInit {
       suggestions: this.suggestions,
       topics: submitTopics
     });
+  }
+
+  onChangePreferences(event) {
+    return this.changePreferences.emit(event.checked);
   }
 }

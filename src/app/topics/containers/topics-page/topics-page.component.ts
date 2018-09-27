@@ -12,8 +12,10 @@ import {TopicsService} from '../../services/topics.service';
   template: `
     <topics-page-display
       [topics]="topics$ | async"
+      [preferences]="preferences$ | async"
       [defaultSelectedIds]="selectedTopicsIds$ | async"
       (submit)="onSubmit($event)"
+      (changePreferences)="onChangePreferences($event)"
     ></topics-page-display>
   `,
   styleUrls: ['./topics-page.component.scss']
@@ -21,6 +23,7 @@ import {TopicsService} from '../../services/topics.service';
 export class TopicsPageComponent implements OnInit {
 
   topics$: Observable<Topic[]>;
+  preferences$: Observable<any>;
   selectedTopicsIds$: Observable<number[]>;
 
   constructor(
@@ -34,6 +37,7 @@ export class TopicsPageComponent implements OnInit {
 
   ngOnInit() {
     this.topics$ = this.store.pipe(select(topicsStore.selectAll));
+    this.preferences$ = this.store.pipe(select(topicsStore.selectPreferences));
     this.selectedTopicsIds$ = this.store.pipe(select(topicsStore.selectSelectedTopicsIds));
   }
 
@@ -57,6 +61,10 @@ export class TopicsPageComponent implements OnInit {
         .then(() => this.success('We get your suggestions'));
     }
 
+  }
+
+  async onChangePreferences(event) {
+    this.store.dispatch(new topicsStore.ChangePreferences(event));
   }
 
   private success(text: string) {

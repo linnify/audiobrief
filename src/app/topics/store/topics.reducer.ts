@@ -11,12 +11,14 @@ export interface TopicsState extends EntityState<Topic> {
   loading: boolean;
   loaded: boolean;
   selectedTopicsIds: number[];
+  preferences: any;
 }
 
 export const initialState: TopicsState = topicsAdapter.getInitialState({
   loading: false,
   loaded: false,
   selectedTopicsIds: [],
+  preferences: undefined
 });
 
 export function reducer(
@@ -45,6 +47,13 @@ export function reducer(
         selectedTopicsIds
       };
     }
+    case topicsActions.CHANGE_PREFERENCES_SUCCESS:
+    case topicsActions.LOAD_PREFERENCES_SUCCESS: {
+      return {
+        ...state,
+        preferences: action.preferences
+      };
+    }
     default:
       return state;
   }
@@ -65,4 +74,9 @@ export const selectTopicsLoaded = createSelector(
 export const selectSelectedTopicsIds = createSelector(
   selectTopicsState,
   (state: TopicsState) => state.selectedTopicsIds
+);
+
+export const selectPreferences = createSelector(
+  selectTopicsState,
+  (state: TopicsState) => state.preferences
 );

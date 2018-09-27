@@ -19,8 +19,8 @@ import {months} from '../../../shared/constants';
           </div>
           <div style="display: flex">
             <button mat-icon-button class="main-button">
-              <mat-icon class="big-icon" *ngIf="!playing" (click)="onPlay(); $event.stopPropagation()">play_circle_filled_white</mat-icon>
-              <mat-icon class="big-icon" *ngIf="playing" (click)="onPause(); $event.stopPropagation()">pause_circle_filled</mat-icon>
+              <mat-icon class="big-icon" *ngIf="!playing" (click)="onPlay($event);">play_circle_filled_white</mat-icon>
+              <mat-icon class="big-icon" *ngIf="playing" (click)="onPause($event);">pause_circle_filled</mat-icon>
             </button>
             <button mat-icon-button class="main-button" (click)="$event.stopPropagation()" [text-copy]="newsEntry.url">
               <mat-icon class="big-icon">share</mat-icon>
@@ -52,11 +52,13 @@ export class NewsListItemComponent implements OnInit {
      ${date.getDate()}, ${date.getFullYear()}`;
   }
 
-  onPlay() {
+  onPlay(event) {
+    event.stopPropagation();
     this.play.emit(this.newsEntry);
   }
 
-  onPause() {
+  onPause(event) {
+    event.stopPropagation();
     this.pause.emit(this.newsEntry);
   }
 

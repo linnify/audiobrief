@@ -116,7 +116,7 @@ export class AudioPlayerComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   private playTransactionOrNext() {
-    if (this.playingTransaction === false) {
+    if (this.playingTransaction === false && this.currentNewsIndex !== this.newsEntries.length - 1) {
       this.audio.src = 'assets/transaction.mp3';
       this.playingTransaction = true;
       this.audio.play();

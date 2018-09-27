@@ -27,6 +27,15 @@ export class TopicsService {
       .toPromise();
   }
 
+  setUserPreferences(preferences: boolean): Observable<any> {
+    return this.apiService.post<boolean>('preferences/', {
+      hide_listened_and_skipped: preferences
+    });
+  }
+
+  getUserPreferences(): Observable<any> {
+    return this.apiService.get<boolean>('preferences/');
+  }
   suggestTopics(suggestions: string): Promise<any> {
     const body = {
       suggested_topic: suggestions

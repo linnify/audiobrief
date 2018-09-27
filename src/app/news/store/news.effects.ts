@@ -59,10 +59,11 @@ export class NewsEffects {
     .pipe(
       ofType(newsActions.PLAY_NEXT_NEWS),
       withLatestFrom(this.store.pipe(select(fromNews.selectAll))),
-      switchMap(([action, newsEntries]: [newsActions.PlayNextNews, NewsEntry[]]) =>
-        this.newsService.setStatsNextNews(action.payload, newsEntries)
-          .then(() => new newsActions.SendPlayNewsStatsSuccess())
-          .catch(error => new newsActions.SendPlayNewsStatsFail(error))
+      switchMap(([action, newsEntries]: [newsActions.PlayNextNews, NewsEntry[]]) => {
+          return this.newsService.setStatsNextNews(action.payload, newsEntries)
+            .then(() => new newsActions.SendPlayNewsStatsSuccess())
+            .catch(error => new newsActions.SendPlayNewsStatsFail(error));
+        }
       )
     );
 
@@ -73,7 +74,13 @@ export class NewsEffects {
       withLatestFrom(this.store.pipe(select(fromNews.selectAll))),
       switchMap(([action, newsEntries]: [newsActions.PlayNextNews, NewsEntry[]]) =>
         this.newsService.getNextNews(action.payload, newsEntries)
-          .then((nextNews: NewsEntry) => new newsActions.PlayNextNewsSuccess(nextNews))
+          .then((nextNews: NewsEntry) => {
+            if (nextNews) {
+              return new newsActions.PlayNextNewsSuccess(nextNews);
+            } else {
+              return new newsActions.StopPlayer();
+            }
+          })
           .catch(error => new newsActions.PlayNextNewsFail(error))
       )
     );

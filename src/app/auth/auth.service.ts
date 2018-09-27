@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable, NgZone} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {first, tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
@@ -14,7 +14,8 @@ export class AuthService {
 
   constructor(
     private apiService: ApiService,
-    private router: Router
+    private router: Router,
+    private ngZone: NgZone
   ) {
     this.googleInit();
   }
@@ -35,6 +36,7 @@ export class AuthService {
   }
 
   loginWithGoogle() {
+    // Add ngZone because of this issue https://github.com/angular/angular/issues/18254#issuecomment-336020312
     const auth2 = gapi.auth2.getAuthInstance();
     return auth2.signIn().then((user) => {
       const tokenId = user.getAuthResponse().access_token;
@@ -49,7 +51,12 @@ export class AuthService {
         .pipe(first())
         .toPromise()
         .then((credentials: any) => this.apiService.saveToken(credentials))
-        .then(() => this.router.navigate(['app', 'news']));
+        .then(() => {
+          this.ngZone.run(() => {
+              this.router.navigate(['app', 'news']);
+            }
+          );
+        });
     });
   }
 
@@ -74,8 +81,8 @@ export class AuthService {
 
     gapi.load('auth2', () => {
       gapi.auth2.init({
-        'apiKey': clientLocalSecret,
-        'clientId': clientLocalhost,
+        'apiKey': environment.googleClientLocalSecret,
+        'clientId': environment.googleClientLocalhost,
         'scope': 'profile',
 
       });

@@ -61,7 +61,7 @@
 }
 
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 1000px) {
 
   .progress-bar-container {
     padding-left: $small-margin;
@@ -89,5 +89,11 @@
   .mat-caption {
     font-size: 10px;
     line-height: 10px;
+  }
+}
+
+@media screen and (max-width: 1000px) and (orientation: landscape) {
+  .audio-player__text {
+    width: 500px;
   }
 }

@@ -9,6 +9,7 @@ import {NewsEntry} from '../../types/news-entry';
         <div  class="list-item" *ngFor="let newsEntry of newsEntries">
           <news-list-item
             [newsEntry]="newsEntry"
+            [audio]="audio"
             [playing]="currentNews && currentNews.id === newsEntry.id && playing"
             (play)="onPlay($event)"
             (pause)="onPause($event)"
@@ -32,7 +33,7 @@ export class NewsListComponent implements OnInit {
   @Input() currentNews: NewsEntry;
   @Input() playing: boolean;
   @Input() loading: boolean;
-
+  @Input() audio: HTMLAudioElement;
   @Output() play: EventEmitter<NewsEntry> = new EventEmitter<NewsEntry>();
   @Output() pause: EventEmitter<any> = new EventEmitter();
   @Output() view: EventEmitter<NewsEntry> = new EventEmitter();

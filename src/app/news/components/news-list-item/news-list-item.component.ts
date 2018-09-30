@@ -37,6 +37,7 @@ import {months} from '../../../shared/constants';
 export class NewsListItemComponent implements OnInit {
   @Input() playing: boolean;
   @Input() newsEntry: NewsEntry;
+  @Input() audio: HTMLAudioElement;
 
   @Output() play: EventEmitter<any> = new EventEmitter<any>();
   @Output() pause: EventEmitter<any> = new EventEmitter<any>();
@@ -53,6 +54,13 @@ export class NewsListItemComponent implements OnInit {
   }
 
   onPlay(event) {
+    const isIphoneOrSafari: boolean = !!navigator.userAgent.match(/iphone|safari/ig) || false;
+
+    if (isIphoneOrSafari) {
+      this.audio.muted = true;
+      this.audio.play();
+    }
+
     event.stopPropagation();
     this.play.emit(this.newsEntry);
   }

@@ -19,6 +19,7 @@ import {Logout} from '../../../store';
                     [playing]="playing$ | async"
                     [newsEntries]="newsEntries$ | async"
                     [currentNews]="currentNews$ | async"
+                    [audio]="audio$ | async"
                     (pause)="onPause($event)"
                     (play)="onPlay($event)"
                     (playNext)="onPlayNextNews($event)"
@@ -48,6 +49,7 @@ export class TopBarComponent implements OnInit {
   currentNews$: Observable<NewsEntry>;
   playing$: Observable<boolean>;
   topics$: Observable<Topic[]>;
+  audio$: Observable<HTMLAudioElement>
 
   constructor(
     private store: Store<newsStore.NewsState>,
@@ -60,6 +62,7 @@ export class TopBarComponent implements OnInit {
     this.newsEntries$ = this.store.pipe(select(newsStore.selectAll));
     this.currentNews$ = this.store.pipe(select(newsStore.selectCurrentNews));
     this.playing$ = this.store.pipe(select(newsStore.selectNewsPlaying));
+    this.audio$ = this.store.pipe(select(newsStore.selectAudio));
   }
 
   onPlay(event: NewsEntry) {

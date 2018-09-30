@@ -38,12 +38,13 @@ import {NewsEntry} from '../../../news/types/news-entry';
 export class AudioPlayerComponent implements OnInit, OnChanges, AfterViewInit {
   progress: number = 0;
   currentNewsIndex: number;
-  audio: HTMLAudioElement = new Audio();
+  // audio: HTMLAudioElement = new Audio();
   playingTransaction: boolean = false;
 
   @Input() newsEntries: NewsEntry[];
   @Input() currentNews: NewsEntry;
   @Input() playing: boolean;
+  @Input() audio: HTMLAudioElement;
   @Output() view: EventEmitter<NewsEntry> = new EventEmitter();
   @Output() play: EventEmitter<any> = new EventEmitter();
   @Output() pause: EventEmitter<any> = new EventEmitter();
@@ -64,6 +65,7 @@ export class AudioPlayerComponent implements OnInit, OnChanges, AfterViewInit {
     if (!this.playing) {
       this.audio.pause();
     } else {
+      this.audio.muted = false;
       this.audio.play();
     }
   }

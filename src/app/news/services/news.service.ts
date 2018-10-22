@@ -22,7 +22,7 @@ export class NewsService {
 
   getNewsEntries(): Observable<NewsEntry[]> {
 
-    return this.apiService.get('mynews')
+    return this.apiService.get('mynews/')
       .pipe(
         map((receivedNews: any[]) => {
           const newsEntries: NewsEntry[] =
@@ -55,8 +55,8 @@ export class NewsService {
     return this.sendStartPlayStats(newsEntry, startReason);
   }
 
-  async getNextNews(newsEntry: NewsEntry, newsEntries: NewsEntry[]) {
-    await this.sendEndPlayStats(newsEntry, EndReason.ENDED)
+  async setStatsNextNews(newsEntry: NewsEntry, newsEntries: NewsEntry[]): Promise<void> {
+    await this.sendEndPlayStats(newsEntry, EndReason.ENDED);
 
     this.currentNewsUUID = this.uuidService.generate();
 
@@ -65,8 +65,14 @@ export class NewsService {
     if (newsEntryIndex !== newsEntries.length - 1) {
       await this.sendStartPlayStats(newsEntries[newsEntryIndex + 1], StartReason.PREV_ENDED);
     }
+  }
 
-    return newsEntries[newsEntryIndex + 1];
+  getNextNews(newsEntry: NewsEntry, newsEntries: NewsEntry[]): Promise<NewsEntry> {
+    const newsEntryIndex: number = newsEntries.findIndex((entry: NewsEntry) => entry.id === newsEntry.id);
+    if (newsEntryIndex !== newsEntries.length - 1) {
+      return Promise.resolve(newsEntries[newsEntryIndex + 1]);
+    }
+    return Promise.resolve(null);
   }
 
   pause(newsEntry: NewsEntry) {
@@ -82,12 +88,12 @@ export class NewsService {
     };
 
     console.log(startPlayStat);
-    // return this.apiService.post('sendstartplaystats', startPlayStat)
-    //   .pipe(
-    //     first(),
-    //     tap(response => console.log(response))
-    //   )
-    //   .toPromise();
+    return this.apiService.post('sendstartplaystats/', [startPlayStat])
+      .pipe(
+        first(),
+        // tap(response => console.log(response))
+      )
+      .toPromise();
   }
 
   async sendEndPlayStats(newsEntry: NewsEntry, endReason: EndReason) {
@@ -99,11 +105,11 @@ export class NewsService {
     };
 
     console.log(endPlayStat);
-    // return this.apiService.post('sendendplaystats', endPlayStat)
-    //   .pipe(
-    //     first(),
-    //     tap(response => console.log(response))
-    //   )
-    //   .toPromise();
+    return this.apiService.post('sendendplaystats/', [endPlayStat])
+      .pipe(
+        first(),
+        // tap(response => console.log(response))
+      )
+      .toPromise();
   }
 }

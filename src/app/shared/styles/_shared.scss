@@ -46,9 +46,19 @@ $medium-image-size: 100px;
   @include mat-icon-size(30px);
 }
 
-@media screen and (max-width: 480px) {
+.logo {
+  width: $medium-image-size;
+  height: $medium-image-size;
+}
+
+@media screen and (max-width: 1000px) {
   .main-button {
     line-height:35px !important;
+  }
+
+  .logo {
+    width: $small-image-size;
+    height: $small-image-size;
   }
 
   .big-icon {

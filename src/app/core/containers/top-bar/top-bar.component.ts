@@ -4,10 +4,12 @@ import {NewsEntry} from '../../../news/types/news-entry';
 import {NewsService} from '../../../news/services/news.service';
 import {AuthService} from '../../../auth/auth.service';
 import {MatDialog} from '@angular/material';
-import {TopicsPageComponent} from '../../../topics-page/topics-page.component';
+import {TopicsPageComponent} from '../../../topics/containers/topics-page/topics-page.component';
 import {select, Store} from '@ngrx/store';
 import * as newsStore from '../../../news/store';
 import * as fromRoot from '../../../store';
+import {Topic} from '../../../topics/types/topic';
+import {Logout} from '../../../store';
 
 @Component({
   selector: 'top-bar',
@@ -17,6 +19,7 @@ import * as fromRoot from '../../../store';
                     [playing]="playing$ | async"
                     [newsEntries]="newsEntries$ | async"
                     [currentNews]="currentNews$ | async"
+                    [audio]="audio$ | async"
                     (pause)="onPause($event)"
                     (play)="onPlay($event)"
                     (playNext)="onPlayNextNews($event)"
@@ -45,6 +48,8 @@ export class TopBarComponent implements OnInit {
   newsEntries$: Observable<NewsEntry[]>;
   currentNews$: Observable<NewsEntry>;
   playing$: Observable<boolean>;
+  topics$: Observable<Topic[]>;
+  audio$: Observable<HTMLAudioElement>
 
   constructor(
     private store: Store<newsStore.NewsState>,
@@ -57,6 +62,7 @@ export class TopBarComponent implements OnInit {
     this.newsEntries$ = this.store.pipe(select(newsStore.selectAll));
     this.currentNews$ = this.store.pipe(select(newsStore.selectCurrentNews));
     this.playing$ = this.store.pipe(select(newsStore.selectNewsPlaying));
+    this.audio$ = this.store.pipe(select(newsStore.selectAudio));
   }
 
   onPlay(event: NewsEntry) {
@@ -73,18 +79,32 @@ export class TopBarComponent implements OnInit {
 
   onView(event: NewsEntry) {
     this.store.dispatch(new fromRoot.Go({
-      path: ['/', 'news', event.id]
+      path: ['app', 'news', event.id]
     }));
   }
 
   onTopics() {
-    const dialogRef = this.dialog.open(TopicsPageComponent);
+    const config = {
+      position: {
+        top: '10px',
+        right: '10px'
+      },
+      height: '98%',
+      width: '100vw',
+      panelClass: 'full-screen-modal',
+    };
+    const dialogRef = this.dialog.open(TopicsPageComponent, {
+        panelClass: 'my-test-class'
+      }
+    );
 
     dialogRef.afterClosed().subscribe(result => {
     });
   }
 
   onLogout() {
+    this.store.dispatch(new newsStore.StopPlayer());
+    this.store.dispatch(new Logout());
     this.authService.logout();
   }
 }

@@ -10,7 +10,7 @@ import {NewsEntry} from '../../../news/types/news-entry';
           {{currentNews.title}}
         </div>
         <div class="mat-caption audio-player__text-topics">
-          {{currentNews.topic}}
+          {{currentNews.topic.label}}
         </div>
       </div>
       <div class="audio-player__buttons">
@@ -27,6 +27,9 @@ import {NewsEntry} from '../../../news/types/news-entry';
           <mat-icon class="medium-icon">skip_next</mat-icon>
         </button>
         <mat-progress-bar class="progress-bar-container" mode="determinate" [value]="progress"></mat-progress-bar>
+        <div class="audio-player__duration">
+          <span *ngIf="audio.duration">{{audio.duration | minuteSeconds}}</span>
+        </div>
       </div>
     </div>
   `,
@@ -35,11 +38,13 @@ import {NewsEntry} from '../../../news/types/news-entry';
 export class AudioPlayerComponent implements OnInit, OnChanges, AfterViewInit {
   progress: number = 0;
   currentNewsIndex: number;
-  private audio: HTMLAudioElement = new Audio();
+  // audio: HTMLAudioElement = new Audio();
+  playingTransaction: boolean = false;
 
   @Input() newsEntries: NewsEntry[];
   @Input() currentNews: NewsEntry;
   @Input() playing: boolean;
+  @Input() audio: HTMLAudioElement;
   @Output() view: EventEmitter<NewsEntry> = new EventEmitter();
   @Output() play: EventEmitter<any> = new EventEmitter();
   @Output() pause: EventEmitter<any> = new EventEmitter();
@@ -60,6 +65,7 @@ export class AudioPlayerComponent implements OnInit, OnChanges, AfterViewInit {
     if (!this.playing) {
       this.audio.pause();
     } else {
+      this.audio.muted = false;
       this.audio.play();
     }
   }
@@ -70,7 +76,7 @@ export class AudioPlayerComponent implements OnInit, OnChanges, AfterViewInit {
     });
 
     this.audio.addEventListener('ended', () => {
-      this.playNext.emit(this.currentNews);
+      this.playTransactionOrNext();
     });
   }
 
@@ -109,5 +115,16 @@ export class AudioPlayerComponent implements OnInit, OnChanges, AfterViewInit {
 
   onView() {
     this.view.emit(this.currentNews);
+  }
+
+  private playTransactionOrNext() {
+    if (this.playingTransaction === false && this.currentNewsIndex !== this.newsEntries.length - 1) {
+      this.audio.src = 'assets/transaction.mp3';
+      this.playingTransaction = true;
+      this.audio.play();
+    } else {
+      this.playingTransaction = false;
+      this.playNext.emit(this.currentNews);
+    }
   }
 }

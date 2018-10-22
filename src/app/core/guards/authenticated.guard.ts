@@ -17,12 +17,13 @@ export class AuthenticatedGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
     return this.apiService.isAuthenticated()
-      .pipe(
-        tap((authenticated: boolean) => {
+      .then((authenticated: boolean) => {
           if (!authenticated) {
-            this.router.navigate(['/']);
+            this.router.navigate(['app']);
           }
-        })
+
+          return true;
+        }
       );
   }
 }

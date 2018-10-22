@@ -55,17 +55,33 @@ export class NewsEffects {
     );
 
   @Effect()
+  sendStatsPlayNext$: Observable<Action> = this.actions$
+    .pipe(
+      ofType(newsActions.PLAY_NEXT_NEWS),
+      withLatestFrom(this.store.pipe(select(fromNews.selectAll))),
+      switchMap(([action, newsEntries]: [newsActions.PlayNextNews, NewsEntry[]]) => {
+          return this.newsService.setStatsNextNews(action.payload, newsEntries)
+            .then(() => new newsActions.SendPlayNewsStatsSuccess())
+            .catch(error => new newsActions.SendPlayNewsStatsFail(error));
+        }
+      )
+    );
+
+  @Effect()
   playNext$: Observable<Action> = this.actions$
     .pipe(
       ofType(newsActions.PLAY_NEXT_NEWS),
       withLatestFrom(this.store.pipe(select(fromNews.selectAll))),
       switchMap(([action, newsEntries]: [newsActions.PlayNextNews, NewsEntry[]]) =>
         this.newsService.getNextNews(action.payload, newsEntries)
-          .then((nextNews: NewsEntry) => new newsActions.PlayNextNewsSuccess(nextNews))
-          .catch(error => {
-            console.error(error);
-            return new newsActions.PlayNextNewsFail(error);
+          .then((nextNews: NewsEntry) => {
+            if (nextNews) {
+              return new newsActions.PlayNextNewsSuccess(nextNews);
+            } else {
+              return new newsActions.StopPlayer();
+            }
           })
+          .catch(error => new newsActions.PlayNextNewsFail(error))
       )
     );
 

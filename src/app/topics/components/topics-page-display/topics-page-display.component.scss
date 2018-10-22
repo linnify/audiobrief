@@ -1,0 +1,14 @@
+.topics-display-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+@media screen and (min-width: 1000px) {
+
+  .topics-dimension {
+    height: 500px;
+    width: 500px
+  }
+}

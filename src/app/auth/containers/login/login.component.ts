@@ -7,9 +7,9 @@ import {Router} from '@angular/router';
 @Component({
   selector: 'login',
   template: `
-    <login-form 
-      [loading]="loading" 
-      [errorMessage]="errorMessage" 
+    <login-form
+      [loading]="loading"
+      [errorMessage]="errorMessage"
       (login)="onLogin($event)"
       (loginWithGoogle)="onLoginWithGoogle()"></login-form>
   `,
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
 
     this.authService.loginWithUsernameAndPassword(username, password)
       .subscribe(() => {
-        this.router.navigate(['news']);
+        this.router.navigate(['app', 'news']);
       }, (error: HttpErrorResponse) => {
         this.loading = false;
         this.errorMessage = 'Invalid username or password';
@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
   }
 
   onLoginWithGoogle() {
-
+    this.authService.loginWithGoogle()
+      .catch(error => console.log(error));
   }
 }

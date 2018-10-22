@@ -4,6 +4,8 @@ import {environment} from '../../../environments/environment';
 import {AuthToken} from '../../auth/types/auth-token';
 import {HttpParams} from '@angular/common/http/src/params';
 import {Observable, of} from 'rxjs';
+import {GrantType} from '../../auth/types/grant-type';
+import {first, map, tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,38 +15,43 @@ export class ApiService {
   private readonly baseUrl: string;
   private authToken: AuthToken;
 
-  constructor(protected http: HttpClient) {
+  constructor(
+    protected http: HttpClient,
+    ) {
     this.baseUrl = environment.apiUrl;
   }
 
-  public setAuthToken(authToken: AuthToken) {
-    this.authToken = authToken;
-    localStorage.setItem('authToken', JSON.stringify(authToken));
-  }
+
 
   public removeAuthToken() {
     this.authToken = null;
     localStorage.removeItem('authToken');
   }
 
-  public isAuthenticated(): Observable<boolean> {
+  public async isAuthenticated(): Promise<boolean> {
 
     const authToken: string = localStorage.getItem('authToken');
 
     if (authToken) {
       this.authToken = JSON.parse(localStorage.getItem('authToken'));
-      return of(true);
+      const date: number = new Date().getTime();
+
+      if (this.authToken.expiresAt < date) {
+        await this.refreshToken(this.authToken);
+      }
+
+      return true;
     }
 
-    return of(false);
+    return false;
   }
 
-  get(path: string, params?: HttpParams | { [param: string]: string | string[]}) {
-    return this.http.get(this.baseUrl + '/' + path, this.getOptions(params));
+  get<T>(path: string, params?: HttpParams | { [param: string]: string | string[]}) {
+    return this.http.get<T>(this.baseUrl + '/' + path, this.getOptions(params));
   }
 
-  post(path: string, body: any | null, params?: HttpParams | { [param: string]: string | string[]}) {
-    return this.http.post(this.baseUrl + '/' + path, body, this.getOptions(params));
+  post<T>(path: string, body: any | null, params?: HttpParams | { [param: string]: string | string[]}) {
+    return this.http.post<T>(this.baseUrl + '/' + path, body, this.getOptions(params));
   }
 
   private getHeaders(): HttpHeaders {
@@ -59,8 +66,45 @@ export class ApiService {
 
   }
 
-  private getOptions(params: HttpParams | { [param: string]: string | string[]}) {
+  saveToken(credentials: any) {
+    const expiresAt: number = new Date().getTime() + credentials.expires_in * 1000;
 
+    const authToken: AuthToken = {
+      accessToken: credentials.access_token,
+      expiresAt,
+      refreshToken: credentials.refresh_token,
+      scope: credentials.scope,
+      tokenType: credentials.token_type
+    };
+
+    this.setAuthToken(authToken);
+  }
+
+  private refreshToken(authToken: AuthToken) {
+    const body = {
+      client_id: environment.clientId,
+      client_secret: environment.clientSecret,
+      grant_type: GrantType.REFRESH_TOKEN,
+      refresh_token: authToken.refreshToken
+    };
+
+    return this.http.post(this.baseUrl + '/' + 'auth/token', body)
+      .pipe(
+        first(),
+        map((credentials: any) => {
+          return this.saveToken(credentials);
+        })
+      )
+      .toPromise();
+  }
+
+  private setAuthToken(authToken: AuthToken) {
+    this.authToken = authToken;
+
+    localStorage.setItem('authToken', JSON.stringify(authToken));
+  }
+
+  private getOptions(params: HttpParams | { [param: string]: string | string[]}) {
     return {
       headers: this.getHeaders(),
       params

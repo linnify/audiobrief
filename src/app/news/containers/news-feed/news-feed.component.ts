@@ -16,6 +16,7 @@ import {NewsPageComponent} from '../news-page/news-page.component';
         [loading]="loading$ | async"
         [playing]="playing$ | async"
         [currentNews]="currentNews$ | async"
+        [audio]="audio$ | async"
         (pause)="onPause($event)"
         (play)="onPlay($event)"
         (view)="onView($event)">
@@ -29,6 +30,8 @@ export class NewsFeedComponent implements OnInit {
   currentNews$: Observable<NewsEntry>;
   playing$: Observable<boolean>;
   loading$: Observable<boolean>;
+  audio$: Observable<HTMLAudioElement>
+
   constructor(
     private newsService: NewsService,
     private store: Store<newsStore.NewsState>,
@@ -39,6 +42,7 @@ export class NewsFeedComponent implements OnInit {
     this.loading$ = this.store.pipe(select(newsStore.selectNewsLoading));
     this.currentNews$ = this.store.pipe(select(newsStore.selectCurrentNews));
     this.playing$ = this.store.pipe(select(newsStore.selectNewsPlaying));
+    this.audio$ = this.store.pipe(select(newsStore.selectAudio));
   }
 
   onPlay(event: NewsEntry) {
@@ -51,7 +55,7 @@ export class NewsFeedComponent implements OnInit {
 
   onView(event: NewsEntry) {
     this.store.dispatch(new fromRoot.Go({
-      path: ['/', 'news', event.id]
+      path: ['/', 'app', 'news', event.id]
     }));
   }
 }

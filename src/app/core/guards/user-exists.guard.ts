@@ -18,13 +18,12 @@ export class UserExistsGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
     return this.apiService.isAuthenticated()
-      .pipe(
-        map((authenticated: boolean) => {
+      .then((authenticated: boolean) => {
           if (authenticated) {
-            this.router.navigate(['news']);
+            this.router.navigate(['app', 'news']);
           }
           return true;
-        })
+        }
       );
 
   }

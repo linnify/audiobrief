@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TopicsPageComponent } from './topics-page/topics-page.component';
+import { TopicsPageComponent } from './topics/containers/topics-page/topics-page.component';
 import {SharedModule} from './shared/shared.module';
 import {CoreModule} from './core/core.module';
 import { EffectsModule } from '@ngrx/effects';
@@ -13,11 +13,13 @@ import { reducers, effects, CustomSerializer } from './store';
 import {RouterStateSerializer, StoreRouterConnectingModule} from '@ngrx/router-store';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {globalLogoutMetaReducer} from './store/reducers/logout.reducer';
+// import { AuthServiceConfig, GoogleLoginProvider, SocialLoginModule} from 'angularx-social-login';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    TopicsPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,14 +27,19 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     AppRoutingModule,
     SharedModule,
     CoreModule,
-    StoreModule.forRoot(reducers, {}),
+    StoreModule.forRoot(reducers, { metaReducers: [globalLogoutMetaReducer] }),
     EffectsModule.forRoot(effects),
     StoreRouterConnectingModule,
     environment.production === false ? StoreDevtoolsModule.instrument() : [],
 
   ],
-  providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }],
-  entryComponents: [TopicsPageComponent],
+  providers: [
+    {
+      provide: RouterStateSerializer,
+      useClass: CustomSerializer
+    },
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

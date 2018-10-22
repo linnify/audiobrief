@@ -1,3 +1,5 @@
+import {Topic} from '../../topics/types/topic';
+
 export class NewsEntry {
   id: number;
   tags: string[];
@@ -15,7 +17,8 @@ export class NewsEntry {
   number_of_shares: number;
   number_of_listens: number;
   credibility: number;
-  topic: string;
+  topic: Topic;
   mp3_file: string;
   uploader: number;
+  source_new?: any;
 }

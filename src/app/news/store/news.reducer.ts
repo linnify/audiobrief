@@ -12,13 +12,15 @@ export interface NewsState extends EntityState<NewsEntry> {
   playing: boolean;
   loading: boolean;
   loaded: boolean;
+  audio: HTMLAudioElement;
 }
 
 export const initialState: NewsState = newsAdapter.getInitialState({
   currentNews: undefined,
   playing: false,
   loading: false,
-  loaded: false
+  loaded: false,
+  audio: new Audio()
 });
 
 export function reducer(
@@ -44,15 +46,15 @@ export function reducer(
     case newsActions.PLAY_NEXT_NEWS:
     case newsActions.PLAY_NEWS: {
       return {
-        ...state,
-        playing: true
+        ...state
       };
     }
     case newsActions.PLAY_NEXT_NEWS_SUCCESS:
     case newsActions.PLAY_NEWS_SUCCESS: {
       return {
         ...state,
-        currentNews: action.payload
+        currentNews: action.payload,
+        playing: true
       };
     }
     case newsActions.PAUSE_NEWS: {
@@ -61,6 +63,7 @@ export function reducer(
         playing: false
       };
     }
+    case newsActions.STOP_PLAYER:
     case newsActions.PLAY_NEXT_NEWS_FAIL:
     case newsActions.PLAY_NEWS_FAIL:
       return {
@@ -95,6 +98,11 @@ export const selectNewsPlaying = createSelector(
 export const selectCurrentNews = createSelector(
   selectNewsState,
   (state: NewsState) => state.currentNews
+);
+
+export const selectAudio = createSelector(
+  selectNewsState,
+  (state: NewsState) => state.audio
 );
 
 export const selectNewsEntry = createSelector(

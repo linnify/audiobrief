@@ -4,8 +4,10 @@ import {NewsEntry} from '../../types/news-entry';
 import {select, Store} from '@ngrx/store';
 import * as newsStore from '../../store';
 import * as fromRoot from '../../../store';
-import {switchMap} from 'rxjs/operators';
+import {switchMap, tap} from 'rxjs/operators';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {environment} from '../../../../environments/environment';
+import {MetaService} from '../../../core/services/meta.service';
 
 @Component({
   animations: [
@@ -37,7 +39,8 @@ export class NewsPageComponent implements OnInit {
   loading$: Observable<boolean>;
 
   constructor(
-    private store: Store<newsStore.NewsState>
+    private store: Store<newsStore.NewsState>,
+    private metaService: MetaService
   ) { }
 
   ngOnInit() {
@@ -47,6 +50,14 @@ export class NewsPageComponent implements OnInit {
       select(fromRoot.selectNewsId),
       switchMap((newsId: number) => {
         return this.store.pipe(select(newsStore.selectNewsEntry, {id: newsId}));
+      }),
+      tap((newsEntry: NewsEntry) => {
+        const config: any = {
+          title: newsEntry.title,
+          description: 'Small description',
+          url: `${environment.host}app/news/${newsEntry.id}`
+        };
+        this.metaService.generateTags(config);
       })
     );
   }

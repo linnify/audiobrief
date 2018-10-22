@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {NewsEntry} from '../../types/news-entry';
+import {months} from '../../../shared/constants';
 
 @Component({
   selector: 'news-page-display',
@@ -9,9 +10,15 @@ import {NewsEntry} from '../../types/news-entry';
     </div>
     <div *ngIf="!loading && newsEntry" class="news-page">
       
-      <div class="mat-display-1 summary_title">
+      <div class="mat-display-1" fxLayout="row"  
+           fxLayout.sm="column" fxLayout.xs="column"fxLayoutAlign="start center" fxLayoutGap="32px">
         <img *ngIf="newsEntry.source_new" src="{{newsEntry.source_new.logo_file}}" class="logo">
-        <div>{{newsEntry.title}}</div>
+        <div fxFlexFill fxLayout="column" fxLayoutAlign="center space-between">
+          <div>{{newsEntry.title}}</div>
+          <div class="mat-subheading-1" style="margin: 0">
+            {{newsEntry.source_new.name}} - {{getFormattedDate(newsEntry.date_published)}}
+          </div>
+        </div>
       </div>
       <div class="mat-title">
         {{newsEntry.edited_summary}}
@@ -48,4 +55,11 @@ export class NewsPageDisplayComponent implements OnInit {
   onClick() {
     this.close.emit();
   }
+
+
+  getFormattedDate(date: Date) {
+    return `${months[date.getMonth()]}
+     ${date.getDate()}, ${date.getFullYear()}`;
+  }
+
 }

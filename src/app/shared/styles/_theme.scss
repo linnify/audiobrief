@@ -15,9 +15,20 @@ $main-color: #2f64ac;
 
 @media screen and (max-width: 1000px) {
 
-  .my-test-class  {
+  .full-popup  {
     max-width: none !important;
     width: 100vw;
     height: 100vh;
+  }
+}
+
+.popup-dimension {
+  height: 100%
+}
+
+@media screen and (min-width: 1000px) {
+
+  .popup-dimension {
+    width: 500px
   }
 }

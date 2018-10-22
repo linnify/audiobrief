@@ -9,7 +9,8 @@ export const environment = {
     'D5zOfcvWslqZzHWPzlZjRym5tm58bAe4ZRvnMWYQWvnhpAXOd0NpVhyrwy0CkzZnLayVODaoDuJxVaVlYDFaMkQSNhYLTKklNNAaxpebNowtdIrq6Gc9TB7Q3t97k9fl',
   apiUrl: 'https://web.audiobrief.news/news/rapi',
   googleClientLocalhost: '166531460892-5ti7h7jkrqtdmjq1ipiet62j1djqnber.apps.googleusercontent.com',
-  googleClientLocalSecret: 'wGwzFTxzZdfJUvfw7xtHAEWt'
+  googleClientLocalSecret: 'wGwzFTxzZdfJUvfw7xtHAEWt',
+  host: 'http://localhost:4200/'
 };
 
 /*

@@ -4,8 +4,11 @@ import {TagTopic, Topic} from '../../types/topic';
 @Component({
   selector: 'topics-page-display',
   template: `
-    <div class="topics-dimension">
-      <div class="topics-display-container">
+    <div class="popup-dimension">
+      <button mat-icon-button (click)="onClose()">
+        <mat-icon>close</mat-icon>
+      </button>
+      <div fxLayout="column" fxLayoutGap="5%" fxLayoutAlign="space-between">
         <h2>Topics</h2>
         <div>
           Choose the topics of interest and we'll populate
@@ -36,7 +39,7 @@ import {TagTopic, Topic} from '../../types/topic';
           <mat-slide-toggle color="primary" [checked]="preferences && preferences.hide_listened_and_skipped" 
                             (change)="onChangePreferences($event)"></mat-slide-toggle>
         </div>
-        <div style="display: flex; justify-content: flex-end; padding-top: 17px;">
+        <div fxLayoutAlign="end">
           <button mat-raised-button type="button" color="primary" (click)="onSubmitTopics()" >Save</button>
         </div>
       </div>
@@ -52,6 +55,7 @@ export class TopicsPageDisplayComponent implements OnInit {
   @Output() submit = new EventEmitter<{topics: TagTopic[], suggestions: string}>();
   @Output() suggestTopics = new EventEmitter<string>();
   @Output() changePreferences = new EventEmitter<any>();
+  @Output() close = new EventEmitter();
   selectedTopicsIds: number[] = [];
 
   suggestions: string;
@@ -85,5 +89,9 @@ export class TopicsPageDisplayComponent implements OnInit {
 
   onChangePreferences(event) {
     return this.changePreferences.emit(event.checked);
+  }
+
+  onClose() {
+    this.close.emit();
   }
 }

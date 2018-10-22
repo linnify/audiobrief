@@ -7,6 +7,7 @@ import * as newsStore from '../../store';
 import * as fromRoot from '../../../store';
 import {MatDialog} from '@angular/material';
 import {NewsPageComponent} from '../news-page/news-page.component';
+import {MetaService} from '../../../core/services/meta.service';
 
 @Component({
   selector: 'news-feed',
@@ -19,7 +20,8 @@ import {NewsPageComponent} from '../news-page/news-page.component';
         [audio]="audio$ | async"
         (pause)="onPause($event)"
         (play)="onPlay($event)"
-        (view)="onView($event)">
+        (view)="onView($event)"
+        (openUrl)="onOpenUrl($event)">
       </news-list>
   `,
   styleUrls: ['./news-feed.component.scss'],
@@ -35,6 +37,7 @@ export class NewsFeedComponent implements OnInit {
   constructor(
     private newsService: NewsService,
     private store: Store<newsStore.NewsState>,
+    private metaService: MetaService
   ) { }
 
   ngOnInit() {
@@ -57,5 +60,11 @@ export class NewsFeedComponent implements OnInit {
     this.store.dispatch(new fromRoot.Go({
       path: ['/', 'app', 'news', event.id]
     }));
+  }
+
+  onOpenUrl(event: {url: string, config: any}) {
+    console.log(event.url);
+    this.metaService.generateTags(event.config);
+    window.open(event.url, '_blank');
   }
 }

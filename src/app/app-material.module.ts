@@ -8,6 +8,7 @@ import {
   MatInputModule, MatListModule, MatMenuModule, MatProgressBarModule,
   MatProgressSpinnerModule, MatSliderModule, MatSlideToggleModule, MatSnackBarModule, MatToolbarModule, MatTooltipModule,
 } from '@angular/material';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import {
     MatTooltipModule,
     MatSnackBarModule,
     MatChipsModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    FlexLayoutModule,
   ],
   exports: [
     MatAutocompleteModule,
@@ -48,7 +50,8 @@ import {
     MatTooltipModule,
     MatSnackBarModule,
     MatChipsModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    FlexLayoutModule,
   ],
 })
 export class AppMaterialModule {}

@@ -6,7 +6,8 @@ import {months} from '../../../shared/constants';
   selector: 'news-page-display',
   template: `
     <div class="close-button">
-      <button mat-icon-button class="main-button" (click)="onClick()"><mat-icon class="big-icon">close</mat-icon></button>
+      <button *ngIf="authenticated" mat-icon-button 
+              class="main-button" (click)="onClick()"><mat-icon class="big-icon">close</mat-icon></button>
     </div>
     <div *ngIf="!loading && newsEntry" class="news-page">
       
@@ -45,6 +46,7 @@ export class NewsPageDisplayComponent implements OnInit {
 
   @Input() loading: boolean;
   @Input() newsEntry: NewsEntry;
+  @Input() authenticated: boolean;
   @Output() close: EventEmitter<any> = new EventEmitter();
 
   constructor() { }

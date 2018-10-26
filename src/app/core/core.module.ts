@@ -8,6 +8,7 @@ import {TopicsPageComponent} from '../topics/containers/topics-page/topics-page.
 import {TopicsModule} from '../topics/topics.module';
 import { NewsFeedbackComponent } from './containers/news-feedback/news-feedback.component';
 import { NewsFeedbackDisplayComponent } from './components/news-feedback-display/news-feedback-display.component';
+import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,7 @@ import { NewsFeedbackDisplayComponent } from './components/news-feedback-display
     CoreRoutingModule,
     TopicsModule
   ],
-  declarations: [TopBarComponent, AudioPlayerComponent, NewsFeedbackComponent, NewsFeedbackDisplayComponent],
-  entryComponents: [TopicsPageComponent, NewsFeedbackComponent],
+  declarations: [TopBarComponent, AudioPlayerComponent, NewsFeedbackComponent, NewsFeedbackDisplayComponent, PrivacyPolicyComponent],
+  entryComponents: [TopicsPageComponent, NewsFeedbackComponent, PrivacyPolicyComponent],
 })
 export class CoreModule { }

@@ -6,5 +6,7 @@ export const environment = {
   apiUrl: 'https://web.audiobrief.news/news/rapi',
   googleClientLocalhost: '166531460892-7ha1ba0lph7odl8b9ttumnid49parkjh.apps.googleusercontent.com',
   googleClientLocalSecret: 'ygTgGK6IdHwec4_4SoMD1GhO',
+  facebookClientSecret: 'D5zOfcvWslqZzHWPzlZjRym5tm58bAe4ZRvnMWYQWvnhpAXOd0NpVhyrwy0CkzZnLayVODaoDuJxVaVlYDFaMkQSNhYLTKklNNAaxpebNowtdIrq6Gc9TB7Q3t97k9fl',
+  facebookAppId: '1739255486166445',
   host: 'https://audiobrief.news/'
 };

@@ -5,9 +5,7 @@ import {Observable} from 'rxjs';
 import {select, Store} from '@ngrx/store';
 import * as newsStore from '../../store';
 import * as fromRoot from '../../../store';
-import {MatDialog} from '@angular/material';
-import {NewsPageComponent} from '../news-page/news-page.component';
-import {MetaService} from '../../../core/services/meta.service';
+
 
 @Component({
   selector: 'news-feed',
@@ -36,8 +34,7 @@ export class NewsFeedComponent implements OnInit {
 
   constructor(
     private newsService: NewsService,
-    private store: Store<newsStore.NewsState>,
-    private metaService: MetaService
+    private store: Store<newsStore.NewsState>
   ) { }
 
   ngOnInit() {
@@ -63,8 +60,6 @@ export class NewsFeedComponent implements OnInit {
   }
 
   onOpenUrl(event: {url: string, config: any}) {
-    console.log(event.url);
-    this.metaService.generateTags(event.config);
     window.open(event.url, '_blank');
   }
 }

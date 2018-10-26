@@ -85,6 +85,19 @@ export class NewsEffects {
       )
     );
 
+  @Effect()
+  addCurrentNews$: Observable<Action> = this.actions$
+    .pipe(
+      ofType(newsActions.ADD_CURRENT_NEWS),
+      switchMap((action: newsActions.AddCurrentNews) =>
+        this.newsService.getNewsEntry(action.id)
+          .pipe(
+            map((newsEntry: NewsEntry) => new newsActions.AddCurrentNewsSuccess(newsEntry),
+              catchError(error => of(new newsActions.SendPlayNewsStatsFail(error))
+              )
+            )
+          )));
+
   constructor(
     private actions$: Actions,
     private newsService: NewsService,

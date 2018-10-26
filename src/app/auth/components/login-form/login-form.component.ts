@@ -12,6 +12,11 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
             Login with Google
           </button>
         </div>
+        <div class="google-container">
+          <button mat-button class="google-button" (click)="onLoginWithFacebook()">
+            Login with Facebook
+          </button>
+        </div>
         <div class="mat-headline text">or</div>
         <form [formGroup]="form">
           <mat-form-field appearance="fill">
@@ -56,7 +61,7 @@ export class LoginFormComponent implements OnInit {
   @Input() errorMessage: string;
   @Output() login: EventEmitter<any> = new EventEmitter<any>();
   @Output() loginWithGoogle: EventEmitter<any> = new EventEmitter<any>();
-
+  @Output() loginWithFacebook: EventEmitter<any> = new EventEmitter<any>();
   form: FormGroup;
   hide: boolean = true;
 
@@ -89,4 +94,10 @@ export class LoginFormComponent implements OnInit {
   onLoginWithGoogle() {
     this.loginWithGoogle.emit();
   }
+
+  onLoginWithFacebook() {
+    this.loginWithFacebook.emit();
+  }
 }
+
+

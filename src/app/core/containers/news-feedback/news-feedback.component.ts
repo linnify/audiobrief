@@ -25,10 +25,8 @@ export class NewsFeedbackComponent implements OnInit {
   }
 
   onSubmitFeedback(feedback: string) {
-    console.log(feedback);
     this.coreService.sendFeedback(feedback)
       .subscribe((response) => {
-        console.log(response);
         this.snackBarService.open('Feedback received successfully', 'Dismiss', { duration: 3000 });
         this.dialogRef.close();
       });

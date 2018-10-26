@@ -7,6 +7,7 @@ import {TopBarComponent} from './core/containers/top-bar/top-bar.component';
 import {NewsGuard} from './news/guards/news.guard';
 import {TopicsGuard} from './topics/guards/topics.guard';
 import {UserTopicsGuard} from './topics/guards/user-topics.guard';
+import {PrivacyPolicyComponent} from './core/components/privacy-policy/privacy-policy.component';
 
 const routes: Routes = [{
     path: '',
@@ -22,15 +23,15 @@ const routes: Routes = [{
   {
     path: 'app',
     component: TopBarComponent,
-    canActivate: [AuthenticatedGuard],
+    // canActivate: [],
     children: [
       {
         path: 'news',
-        canActivate: [TopicsGuard, UserTopicsGuard, NewsGuard ],
         loadChildren: './news/news.module#NewsModule'
       },
     ]
   },
+  {path: 'privacy-policy', component: PrivacyPolicyComponent},
   { path: '**', component:  NotFoundComponent }
 ];
 

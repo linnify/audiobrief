@@ -38,9 +38,25 @@ export class NewsService {
       );
   }
 
+  getNewsEntry(id: number): Observable<NewsEntry> {
+    return this.apiService.get(`newsentries/${id}/`)
+      .pipe(
+        map((receivedNews: any) => ({
+          ...receivedNews,
+          date_published: new Date(receivedNews.date_published),
+          uploaded_at: new Date(receivedNews.uploaded_at),
+          start_at: new Date(receivedNews.start_at)
+        }))
+      );
+  }
 
   async play(newsEntry: NewsEntry, oldNewsEntry: NewsEntry) {
     let startReason: StartReason = StartReason.FIRST_PLAY;
+    const authenticated: boolean = await this.apiService.isAuthenticated();
+
+    if (!authenticated) {
+      return;
+    }
 
     if (!this.currentNewsUUID) {
       this.currentNewsUUID = this.uuidService.generate();
@@ -75,7 +91,12 @@ export class NewsService {
     return Promise.resolve(null);
   }
 
-  pause(newsEntry: NewsEntry) {
+  async pause(newsEntry: NewsEntry) {
+    const authenticated: boolean = await this.apiService.isAuthenticated();
+
+    if (!authenticated) {
+      return;
+    }
     return this.sendEndPlayStats(newsEntry, EndReason.PAUSED);
   }
 
@@ -87,7 +108,6 @@ export class NewsService {
       start_reason: startReason
     };
 
-    console.log(startPlayStat);
     return this.apiService.post('sendstartplaystats/', [startPlayStat])
       .pipe(
         first(),
@@ -104,7 +124,6 @@ export class NewsService {
       end_reason: endReason
     };
 
-    console.log(endPlayStat);
     return this.apiService.post('sendendplaystats/', [endPlayStat])
       .pipe(
         first(),

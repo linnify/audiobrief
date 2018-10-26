@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {AuthToken} from '../../auth/types/auth-token';
 import {HttpParams} from '@angular/common/http/src/params';
-import {Observable, of} from 'rxjs';
+import {from, Observable, of} from 'rxjs';
 import {GrantType} from '../../auth/types/grant-type';
 import {first, map, tap} from 'rxjs/operators';
 
@@ -44,6 +44,10 @@ export class ApiService {
     }
 
     return false;
+  }
+
+  authenticated(): Observable<boolean> {
+    return from(this.isAuthenticated());
   }
 
   get<T>(path: string, params?: HttpParams | { [param: string]: string | string[]}) {

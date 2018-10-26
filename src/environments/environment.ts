@@ -10,6 +10,8 @@ export const environment = {
   apiUrl: 'https://web.audiobrief.news/news/rapi',
   googleClientLocalhost: '166531460892-5ti7h7jkrqtdmjq1ipiet62j1djqnber.apps.googleusercontent.com',
   googleClientLocalSecret: 'wGwzFTxzZdfJUvfw7xtHAEWt',
+  facebookClientSecret: 'D5zOfcvWslqZzHWPzlZjRym5tm58bAe4ZRvnMWYQWvnhpAXOd0NpVhyrwy0CkzZnLayVODaoDuJxVaVlYDFaMkQSNhYLTKklNNAaxpebNowtdIrq6Gc9TB7Q3t97k9fl',
+  facebookAppId: '1739255486166445',
   host: 'http://localhost:4200/'
 };
 

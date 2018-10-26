@@ -6,6 +6,9 @@ import {AudioPlayerComponent} from './components/audio-player/audio-player.compo
 import {CoreRoutingModule} from './core-routing.module';
 import {TopicsPageComponent} from '../topics/containers/topics-page/topics-page.component';
 import {TopicsModule} from '../topics/topics.module';
+import { NewsFeedbackComponent } from './containers/news-feedback/news-feedback.component';
+import { NewsFeedbackDisplayComponent } from './components/news-feedback-display/news-feedback-display.component';
+import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 
 @NgModule({
   imports: [
@@ -14,7 +17,7 @@ import {TopicsModule} from '../topics/topics.module';
     CoreRoutingModule,
     TopicsModule
   ],
-  declarations: [TopBarComponent, AudioPlayerComponent],
-  entryComponents: [TopicsPageComponent],
+  declarations: [TopBarComponent, AudioPlayerComponent, NewsFeedbackComponent, NewsFeedbackDisplayComponent, PrivacyPolicyComponent],
+  entryComponents: [TopicsPageComponent, NewsFeedbackComponent, PrivacyPolicyComponent],
 })
 export class CoreModule { }

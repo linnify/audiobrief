@@ -13,11 +13,14 @@ import {NewsEntry} from '../../types/news-entry';
             [playing]="currentNews && currentNews.id === newsEntry.id && playing"
             (play)="onPlay($event)"
             (pause)="onPause($event)"
-            (view)="onView($event)">
+            (view)="onView($event)"
+            (openUrl)="onOpenUrl($event)">
           </news-list-item>
         </div>
         <div class="mat-headline empty-list" *ngIf="newsEntries.length == 0">
-          No more news, try tomorrow.
+          <span>
+            No more news, try tomorrow.
+          </span>
         </div>
       </div>
       <div *ngIf="loading || (!newsEntries && !loading)" class="spinner">
@@ -37,6 +40,8 @@ export class NewsListComponent implements OnInit {
   @Output() play: EventEmitter<NewsEntry> = new EventEmitter<NewsEntry>();
   @Output() pause: EventEmitter<any> = new EventEmitter();
   @Output() view: EventEmitter<NewsEntry> = new EventEmitter();
+  @Output() openUrl: EventEmitter<{url: string, config: any}> = new EventEmitter<{url: string, config: any}>();
+
   constructor() { }
 
   ngOnInit() {
@@ -56,5 +61,9 @@ export class NewsListComponent implements OnInit {
 
   onScroll(event) {
     console.log(event);
+  }
+
+  onOpenUrl(event: {url: string, config: any}) {
+    this.openUrl.emit(event);
   }
 }

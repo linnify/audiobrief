@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {AuthToken} from '../../auth/types/auth-token';
 import {HttpParams} from '@angular/common/http/src/params';
-import {Observable, of} from 'rxjs';
+import {from, Observable, of} from 'rxjs';
 import {GrantType} from '../../auth/types/grant-type';
 import {first, map, tap} from 'rxjs/operators';
 
@@ -14,6 +14,7 @@ export class ApiService {
 
   private readonly baseUrl: string;
   private authToken: AuthToken;
+  private numberOfLogins: number;
 
   constructor(
     protected http: HttpClient,
@@ -46,6 +47,14 @@ export class ApiService {
     return false;
   }
 
+  public isFirstLogin() {
+    return this.numberOfLogins === 0;
+  }
+
+  authenticated(): Observable<boolean> {
+    return from(this.isAuthenticated());
+  }
+
   get<T>(path: string, params?: HttpParams | { [param: string]: string | string[]}) {
     return this.http.get<T>(this.baseUrl + '/' + path, this.getOptions(params));
   }
@@ -76,6 +85,8 @@ export class ApiService {
       scope: credentials.scope,
       tokenType: credentials.token_type
     };
+
+    this.numberOfLogins = credentials.num_logins;
 
     this.setAuthToken(authToken);
   }

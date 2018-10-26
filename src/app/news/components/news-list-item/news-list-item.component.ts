@@ -1,6 +1,7 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {NewsEntry} from '../../types/news-entry';
 import {months} from '../../../shared/constants';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'news-list-item',
@@ -15,16 +16,14 @@ import {months} from '../../../shared/constants';
           <div class="news-item__details">
             <div class="mat-title">{{newsEntry.title}}</div>
             <div class="mat-subheading-2 topic" [ngStyle]="{'background-color': newsEntry.topic.color}">{{newsEntry.topic.label}}</div>
-            <div class="mat-subheading-1">{{getFormattedDate(newsEntry.date_published)}}</div>
+            <div class="mat-subheading-1">{{newsEntry.source_new.name}} - {{getFormattedDate(newsEntry.date_published)}}</div>
           </div>
           <div style="display: flex">
             <button mat-icon-button class="main-button">
               <mat-icon class="big-icon" *ngIf="!playing" (click)="onPlay($event);">play_circle_filled_white</mat-icon>
               <mat-icon class="big-icon" *ngIf="playing" (click)="onPause($event);">pause_circle_filled</mat-icon>
             </button>
-            <button mat-icon-button class="main-button" (click)="$event.stopPropagation()" [text-copy]="newsEntry.url">
-              <mat-icon class="big-icon">share</mat-icon>
-            </button>
+            <audiobrief-share [icon]="true" [newsEntry]="newsEntry" (openUrl)="onOpenUrl($event)"></audiobrief-share>
           </div>
         </div>
         <mat-divider></mat-divider>
@@ -42,8 +41,8 @@ export class NewsListItemComponent implements OnInit {
   @Output() play: EventEmitter<any> = new EventEmitter<any>();
   @Output() pause: EventEmitter<any> = new EventEmitter<any>();
   @Output() view: EventEmitter<any> = new EventEmitter<any>();
-
-  constructor() { }
+  @Output() openUrl: EventEmitter<{url: string, config: any}> = new EventEmitter<{url: string, config: any}>();
+  constructor(@Inject(DOCUMENT) private document: any) { }
 
   ngOnInit() {
   }
@@ -73,5 +72,9 @@ export class NewsListItemComponent implements OnInit {
   onView() {
     this.view.emit(this.newsEntry);
     this.play.emit(this.newsEntry);
+  }
+
+  onOpenUrl(event: {url: string, config: any}): void {
+    this.openUrl.emit(event);
   }
 }

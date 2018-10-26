@@ -28,7 +28,7 @@ export class TopicsGuard implements CanActivate {
         select(fromTopics.selectTopicsLoaded),
         tap((loaded: boolean) => {
           if (!loaded) {
-            this.store.dispatch(new fromTopics.LoadUserPreferences())
+            this.store.dispatch(new fromTopics.LoadUserPreferences());
             this.store.dispatch(new fromTopics.LoadTopics());
           }
         }),

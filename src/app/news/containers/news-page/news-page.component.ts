@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable} from 'rxjs';
+import {from, Observable, of} from 'rxjs';
 import {NewsEntry} from '../../types/news-entry';
 import {select, Store} from '@ngrx/store';
 import * as newsStore from '../../store';
 import * as fromRoot from '../../../store';
-import {switchMap} from 'rxjs/operators';
+import {filter, map, switchMap, tap} from 'rxjs/operators';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {environment} from '../../../../environments/environment';
+import {NewsService} from '../../services/news.service';
+import {ApiService} from '../../../shared/services/api.service';
 
 @Component({
   animations: [
@@ -25,7 +28,9 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
       class="news-page"
       [loading]="loading$ | async"
       [newsEntry]="newsEntry$ | async"
+      [authenticated]="authenticated$ | async"
       (close)="onClose()"
+      (openUrl)="onOpenUrl($event)"
       [@fadeInOut]
     ></news-page-display>
   `,
@@ -35,18 +40,31 @@ export class NewsPageComponent implements OnInit {
 
   newsEntry$: Observable<NewsEntry>;
   loading$: Observable<boolean>;
+  authenticated$: Observable<boolean>;
 
   constructor(
-    private store: Store<newsStore.NewsState>
-  ) { }
+    private store: Store<newsStore.NewsState>,
+    private newsService: NewsService,
+    private apiService: ApiService
+  ) {}
 
   ngOnInit() {
     this.loading$ = this.store.pipe(select(newsStore.selectNewsLoading));
-
+    this.authenticated$ = this.apiService.authenticated();
     this.newsEntry$ =  this.store.pipe(
       select(fromRoot.selectNewsId),
+      filter(newsId => !!newsId),
       switchMap((newsId: number) => {
-        return this.store.pipe(select(newsStore.selectNewsEntry, {id: newsId}));
+        this.store.dispatch(new newsStore.AddCurrentNews(newsId));
+        return this.store.pipe(
+          select(newsStore.selectNewsEntry, {id: newsId}),
+          switchMap((newsEntry: NewsEntry) => {
+            if (!newsEntry) {
+              return this.newsService.getNewsEntry(newsId);
+            }
+            return of(newsEntry);
+          })
+        );
       })
     );
   }
@@ -55,5 +73,9 @@ export class NewsPageComponent implements OnInit {
     this.store.dispatch(new fromRoot.Go({
       path: ['app', 'news']
     }));
+  }
+
+  onOpenUrl(event: {url: string, config: any}) {
+    window.open(event.url, '_blank');
   }
 }

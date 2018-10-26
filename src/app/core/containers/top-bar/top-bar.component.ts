@@ -10,6 +10,8 @@ import * as newsStore from '../../../news/store';
 import * as fromRoot from '../../../store';
 import {Topic} from '../../../topics/types/topic';
 import {Logout} from '../../../store';
+import {NewsFeedbackComponent} from '../news-feedback/news-feedback.component';
+import {ApiService} from '../../../shared/services/api.service';
 
 @Component({
   selector: 'top-bar',
@@ -19,16 +21,21 @@ import {Logout} from '../../../store';
                     [playing]="playing$ | async"
                     [newsEntries]="newsEntries$ | async"
                     [currentNews]="currentNews$ | async"
+                    [authenticated]="authenticated$ | async"
                     [audio]="audio$ | async"
                     (pause)="onPause($event)"
                     (play)="onPlay($event)"
                     (playNext)="onPlayNextNews($event)"
                     (view)="onView($event)"></audio-player>
-      <div class="user-menu">
+      <div class="user-menu" *ngIf="authenticated$ | async">
         <button mat-icon-button class="main-button" [matMenuTriggerFor]="userMenu">
-          <mat-icon class="big-icon">account_circle</mat-icon>
+          <mat-icon class="big-icon">dehaze</mat-icon>
         </button>
         <mat-menu #userMenu="matMenu">
+          <button mat-menu-item (click)="onFeedback()">
+            <mat-icon>feedback</mat-icon>
+            <span>Feedback</span>
+          </button>
           <button mat-menu-item (click)="onTopics()">
             <mat-icon>list</mat-icon>
             <span>Topics</span>
@@ -49,12 +56,14 @@ export class TopBarComponent implements OnInit {
   currentNews$: Observable<NewsEntry>;
   playing$: Observable<boolean>;
   topics$: Observable<Topic[]>;
-  audio$: Observable<HTMLAudioElement>
+  audio$: Observable<HTMLAudioElement>;
+  authenticated$: Observable<boolean>;
 
   constructor(
     private store: Store<newsStore.NewsState>,
     private newsService: NewsService,
     private authService: AuthService,
+    private apiService: ApiService,
     private dialog: MatDialog
   ) { }
 
@@ -63,6 +72,7 @@ export class TopBarComponent implements OnInit {
     this.currentNews$ = this.store.pipe(select(newsStore.selectCurrentNews));
     this.playing$ = this.store.pipe(select(newsStore.selectNewsPlaying));
     this.audio$ = this.store.pipe(select(newsStore.selectAudio));
+    this.authenticated$ = this.apiService.authenticated();
   }
 
   onPlay(event: NewsEntry) {
@@ -94,9 +104,18 @@ export class TopBarComponent implements OnInit {
       panelClass: 'full-screen-modal',
     };
     const dialogRef = this.dialog.open(TopicsPageComponent, {
-        panelClass: 'my-test-class'
+        panelClass: 'full-popup'
       }
     );
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
+  onFeedback() {
+    const dialogRef = this.dialog.open(NewsFeedbackComponent, {
+      panelClass: 'full-popup'
+    });
 
     dialogRef.afterClosed().subscribe(result => {
     });

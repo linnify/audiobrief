@@ -11,7 +11,8 @@ import {Router} from '@angular/router';
       [loading]="loading"
       [errorMessage]="errorMessage"
       (login)="onLogin($event)"
-      (loginWithGoogle)="onLoginWithGoogle()"></login-form>
+      (loginWithGoogle)="onLoginWithGoogle()"
+      (loginWithFacebook)="onLoginWithFacebook()"></login-form>
   `,
   styleUrls: ['./login.component.scss']
 })
@@ -43,5 +44,9 @@ export class LoginComponent implements OnInit {
   onLoginWithGoogle() {
     this.authService.loginWithGoogle()
       .catch(error => console.log(error));
+  }
+
+  async onLoginWithFacebook() {
+    await this.authService.loginWithFacebook()
   }
 }

@@ -15,6 +15,7 @@ import {TopicsService} from '../../services/topics.service';
       [preferences]="preferences$ | async"
       [defaultSelectedIds]="selectedTopicsIds$ | async"
       (submit)="onSubmit($event)"
+      (close)="onClose()"
       (changePreferences)="onChangePreferences($event)"
     ></topics-page-display>
   `,
@@ -65,6 +66,10 @@ export class TopicsPageComponent implements OnInit {
 
   async onChangePreferences(event) {
     this.store.dispatch(new topicsStore.ChangePreferences(event));
+  }
+
+  onClose() {
+    this.dialogRef.close();
   }
 
   private success(text: string) {

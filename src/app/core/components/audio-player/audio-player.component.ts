@@ -1,10 +1,10 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {NewsEntry} from '../../../news/types/news-entry';
 
 @Component({
   selector: 'audio-player',
   template: `
-    <div class="audio-player" *ngIf="newsEntries && currentNews && newsEntries.length !== 0">
+    <div class="audio-player" *ngIf="currentNews">
       <div class="audio-player__text" (click)="onView()">
         <div class="mat-body-1 audio-player__text-title" [matTooltip]="currentNews.title">
           {{currentNews.title}}
@@ -14,16 +14,18 @@ import {NewsEntry} from '../../../news/types/news-entry';
         </div>
       </div>
       <div class="audio-player__buttons">
-        <button  type="button" mat-icon-button (click)="onPlayPrevious()" [disabled]="currentNewsIndex === 0">
+        <button  type="button" *ngIf="authenticated" mat-icon-button 
+                 (click)="onPlayPrevious()" [disabled]="currentNewsIndex === 0">
           <mat-icon class="medium-icon">skip_previous</mat-icon>
         </button>
-        <button  type="button" mat-icon-button class="main-button" *ngIf="!playing" (click)="onPlay()">
+        <button type="button" mat-icon-button class="main-button" *ngIf="!playing" (click)="onPlay()">
           <mat-icon class="big-icon">play_circle_outline</mat-icon>
         </button>
         <button type="button" mat-icon-button class="main-button" *ngIf="playing" (click)="onPause()">
           <mat-icon class="big-icon" style="color: white">pause_circle_outline</mat-icon>
         </button>
-        <button  type="button" mat-icon-button (click)="onPlayNext()" [disabled]="currentNewsIndex === newsEntries.length - 1">
+        <button  type="button" *ngIf="authenticated" mat-icon-button 
+                 (click)="onPlayNext()" [disabled]="currentNewsIndex === newsEntries.length - 1">
           <mat-icon class="medium-icon">skip_next</mat-icon>
         </button>
         <mat-progress-bar class="progress-bar-container" mode="determinate" [value]="progress"></mat-progress-bar>
@@ -45,6 +47,7 @@ export class AudioPlayerComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() currentNews: NewsEntry;
   @Input() playing: boolean;
   @Input() audio: HTMLAudioElement;
+  @Input() authenticated: boolean;
   @Output() view: EventEmitter<NewsEntry> = new EventEmitter();
   @Output() play: EventEmitter<any> = new EventEmitter();
   @Output() pause: EventEmitter<any> = new EventEmitter();

@@ -20,5 +20,12 @@ export class NewsEntry {
   topic: Topic;
   mp3_file: string;
   uploader: number;
-  source_new?: any;
+  source_new?: SourceNew;
+}
+
+export class SourceNew {
+  id: number;
+  logo_file: string;
+  home_url: string;
+  name: string;
 }

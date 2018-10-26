@@ -14,6 +14,8 @@ import {RouterStateSerializer, StoreRouterConnectingModule} from '@ngrx/router-s
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {globalLogoutMetaReducer} from './store/reducers/logout.reducer';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {FacebookModule} from 'ngx-facebook';
 // import { AuthServiceConfig, GoogleLoginProvider, SocialLoginModule} from 'angularx-social-login';
 
 
@@ -31,7 +33,7 @@ import {globalLogoutMetaReducer} from './store/reducers/logout.reducer';
     EffectsModule.forRoot(effects),
     StoreRouterConnectingModule,
     environment.production === false ? StoreDevtoolsModule.instrument() : [],
-
+    FacebookModule.forRoot()
   ],
   providers: [
     {

@@ -57,6 +57,11 @@ export function reducer(
         playing: true
       };
     }
+    case newsActions.ADD_CURRENT_NEWS_SUCCESS:
+      return {
+        ...state,
+        currentNews: action.payload
+      };
     case newsActions.PAUSE_NEWS: {
       return {
         ...state,
@@ -108,6 +113,8 @@ export const selectAudio = createSelector(
 export const selectNewsEntry = createSelector(
   selectEntities,
   (newsEntities: Dictionary<NewsEntry>, props) => {
-    return newsEntities[props.id];
+    if(newsEntities) {
+      return newsEntities[props.id];
+    }
   }
 );

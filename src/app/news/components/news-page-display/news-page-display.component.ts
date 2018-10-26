@@ -28,9 +28,13 @@ import {months} from '../../../shared/constants';
         <div class="mat-title news-page__actions-url">
           <a href='{{newsEntry.url}}' target="_blank" class="story-button">See full story</a>
         </div>
-        <div class="mat-title news-page__actions-share" [text-copy]="newsEntry.url">
-          SHARE
-        </div>
+        <audiobrief-share class="news-page__actions-share" 
+                          [icon]="false" 
+                          [newsEntry]="newsEntry" 
+                          (openUrl)="onOpenUrl($event)"></audiobrief-share>
+        <!--<div class="mat-title news-page__actions-share" [text-copy]="newsEntry.url">-->
+          <!--SHARE-->
+        <!--</div>-->
       </div>
     </div>
 
@@ -48,6 +52,7 @@ export class NewsPageDisplayComponent implements OnInit {
   @Input() newsEntry: NewsEntry;
   @Input() authenticated: boolean;
   @Output() close: EventEmitter<any> = new EventEmitter();
+  @Output() openUrl: EventEmitter<{url: string, config: any}> = new EventEmitter<{url: string, config: any}>();
 
   constructor() { }
 
@@ -64,4 +69,7 @@ export class NewsPageDisplayComponent implements OnInit {
      ${date.getDate()}, ${date.getFullYear()}`;
   }
 
+  onOpenUrl(event: {url: string, config: any}): void {
+    this.openUrl.emit(event);
+  }
 }

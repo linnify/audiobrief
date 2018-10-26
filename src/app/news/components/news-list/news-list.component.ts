@@ -18,7 +18,9 @@ import {NewsEntry} from '../../types/news-entry';
           </news-list-item>
         </div>
         <div class="mat-headline empty-list" *ngIf="newsEntries.length == 0">
-          No more news, try tomorrow.
+          <span>
+            No more news, try tomorrow.
+          </span>
         </div>
       </div>
       <div *ngIf="loading || (!newsEntries && !loading)" class="spinner">

@@ -32,6 +32,7 @@
 @media screen and (max-width: 1000px) {
   .audio-player {
     height: unset;
+    min-height: $top-bar-height;
   }
 
   .user-menu {

@@ -2,7 +2,6 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnInit,
 import {NewsEntry} from '../../types/news-entry';
 import {months} from '../../../shared/constants';
 import { DOCUMENT } from '@angular/common';
-import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'news-list-item',
@@ -24,29 +23,7 @@ import {environment} from '../../../../environments/environment';
               <mat-icon class="big-icon" *ngIf="!playing" (click)="onPlay($event);">play_circle_filled_white</mat-icon>
               <mat-icon class="big-icon" *ngIf="playing" (click)="onPause($event);">pause_circle_filled</mat-icon>
             </button>
-            <button mat-icon-button class="main-button" [matMenuTriggerFor]="shareMenu" 
-                    (click)="$event.stopPropagation()">
-              <mat-icon class="big-icon">share</mat-icon>
-            </button>
-            <mat-menu #shareMenu="matMenu">
-
-              <button mat-menu-item (click)="onOpenUrl('https://www.facebook.com/sharer/sharer.php?u=')">
-                <mat-icon svgIcon="facebook"></mat-icon>
-                <span>Facebook</span>
-              </button>
-              <button mat-menu-item (click)="onOpenUrl('https://twitter.com/home?status=')">
-                <mat-icon svgIcon="twitter"></mat-icon>
-                <span>Twitter</span>
-              </button>
-              <button mat-menu-item (click)="onOpenUrl('https://www.linkedin.com/shareArticle?mini=true&url=')">
-                <mat-icon svgIcon="linkedin"></mat-icon>
-                <span>Linkedin</span>
-              </button>
-              <button mat-menu-item [text-copy]="newsEntry.url">
-                <mat-icon svgIcon="copy"></mat-icon>
-                <span>Copy link</span>
-              </button>
-            </mat-menu>
+            <audiobrief-share [icon]="true" [newsEntry]="newsEntry" (openUrl)="onOpenUrl($event)"></audiobrief-share>
           </div>
         </div>
         <mat-divider></mat-divider>
@@ -97,13 +74,7 @@ export class NewsListItemComponent implements OnInit {
     this.play.emit(this.newsEntry);
   }
 
-  onOpenUrl(sharerUrl: string): void {
-    const url: string = `${sharerUrl}${environment.host}app/news/${this.newsEntry.id}`;
-    const config: any = {
-      title: this.newsEntry.title,
-      description: 'Small description',
-      url: `${environment.host}app/news/${this.newsEntry.id}`
-    };
-    this.openUrl.emit({url, config});
+  onOpenUrl(event: {url: string, config: any}): void {
+    this.openUrl.emit(event);
   }
 }

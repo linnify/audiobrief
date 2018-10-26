@@ -14,6 +14,7 @@ export class ApiService {
 
   private readonly baseUrl: string;
   private authToken: AuthToken;
+  private numberOfLogins: number;
 
   constructor(
     protected http: HttpClient,
@@ -44,6 +45,10 @@ export class ApiService {
     }
 
     return false;
+  }
+
+  public isFirstLogin() {
+    return this.numberOfLogins === 0;
   }
 
   authenticated(): Observable<boolean> {
@@ -80,6 +85,8 @@ export class ApiService {
       scope: credentials.scope,
       tokenType: credentials.token_type
     };
+
+    this.numberOfLogins = credentials.num_logins;
 
     this.setAuthToken(authToken);
   }

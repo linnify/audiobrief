@@ -4,7 +4,7 @@ import {NewsEntry} from '../../types/news-entry';
 import {select, Store} from '@ngrx/store';
 import * as newsStore from '../../store';
 import * as fromRoot from '../../../store';
-import {map, switchMap, tap} from 'rxjs/operators';
+import {filter, map, switchMap, tap} from 'rxjs/operators';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {environment} from '../../../../environments/environment';
 import {NewsService} from '../../services/news.service';
@@ -30,6 +30,7 @@ import {ApiService} from '../../../shared/services/api.service';
       [newsEntry]="newsEntry$ | async"
       [authenticated]="authenticated$ | async"
       (close)="onClose()"
+      (openUrl)="onOpenUrl($event)"
       [@fadeInOut]
     ></news-page-display>
   `,
@@ -52,6 +53,7 @@ export class NewsPageComponent implements OnInit {
     this.authenticated$ = this.apiService.authenticated();
     this.newsEntry$ =  this.store.pipe(
       select(fromRoot.selectNewsId),
+      filter(newsId => !!newsId),
       switchMap((newsId: number) => {
         this.store.dispatch(new newsStore.AddCurrentNews(newsId));
         return this.store.pipe(
@@ -63,15 +65,6 @@ export class NewsPageComponent implements OnInit {
             return of(newsEntry);
           })
         );
-      }),
-      tap((newsEntry: NewsEntry) => {
-        if (newsEntry) {
-          const config: any = {
-            title: newsEntry.title,
-            description: 'Small description',
-            url: `${environment.host}app/news/${newsEntry.id}`
-          };
-        }
       })
     );
   }
@@ -80,5 +73,9 @@ export class NewsPageComponent implements OnInit {
     this.store.dispatch(new fromRoot.Go({
       path: ['app', 'news']
     }));
+  }
+
+  onOpenUrl(event: {url: string, config: any}) {
+    window.open(event.url, '_blank');
   }
 }

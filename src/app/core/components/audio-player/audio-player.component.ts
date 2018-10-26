@@ -1,10 +1,10 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {NewsEntry} from '../../../news/types/news-entry';
 
 @Component({
   selector: 'audio-player',
   template: `
-    <div class="audio-player" *ngIf="currentNews && ((newsEntries && newsEntries.length !== 0) || !authenticated)">
+    <div class="audio-player" *ngIf="currentNews">
       <div class="audio-player__text" (click)="onView()">
         <div class="mat-body-1 audio-player__text-title" [matTooltip]="currentNews.title">
           {{currentNews.title}}

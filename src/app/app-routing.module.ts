@@ -23,7 +23,6 @@ const routes: Routes = [{
   {
     path: 'app',
     component: TopBarComponent,
-    // canActivate: [],
     children: [
       {
         path: 'news',

@@ -59,10 +59,6 @@ export class NewsListComponent implements OnInit {
     this.view.emit(event);
   }
 
-  onScroll(event) {
-    console.log(event);
-  }
-
   onOpenUrl(event: {url: string, config: any}) {
     this.openUrl.emit(event);
   }

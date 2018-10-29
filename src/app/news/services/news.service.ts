@@ -109,10 +109,7 @@ export class NewsService {
     };
 
     return this.apiService.post('sendstartplaystats/', [startPlayStat])
-      .pipe(
-        first(),
-        // tap(response => console.log(response))
-      )
+      .pipe(first())
       .toPromise();
   }
 
@@ -125,10 +122,7 @@ export class NewsService {
     };
 
     return this.apiService.post('sendendplaystats/', [endPlayStat])
-      .pipe(
-        first(),
-        // tap(response => console.log(response))
-      )
+      .pipe(first())
       .toPromise();
   }
 }

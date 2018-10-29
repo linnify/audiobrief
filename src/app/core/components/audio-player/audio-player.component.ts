@@ -40,7 +40,6 @@ import {NewsEntry} from '../../../news/types/news-entry';
 export class AudioPlayerComponent implements OnInit, OnChanges, AfterViewInit {
   progress: number = 0;
   currentNewsIndex: number;
-  // audio: HTMLAudioElement = new Audio();
   playingTransaction: boolean = false;
 
   @Input() newsEntries: NewsEntry[];
@@ -97,7 +96,6 @@ export class AudioPlayerComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   onPlayNext() {
-    // last song in playlist
     if (this.currentNewsIndex === this.newsEntries.length - 1) {
       return;
     }
@@ -107,7 +105,6 @@ export class AudioPlayerComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   onPlayPrevious() {
-    // first song in playlist
     if (this.currentNewsIndex <= 0) {
       return;
     }

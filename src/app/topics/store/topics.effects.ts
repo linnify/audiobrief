@@ -44,6 +44,7 @@ export class TopicsEffects {
     .pipe(
       ofType(topicsActions.LOAD_PREFERENCES),
       switchMap((action: topicsActions.LoadUserPreferences) => {
+
         return this.topicsService.getUserPreferences()
           .pipe(
             map((preferences: any) => new topicsActions.LoadUserPreferencesSuccess(preferences)),

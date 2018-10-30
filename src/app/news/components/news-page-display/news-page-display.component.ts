@@ -52,7 +52,7 @@ export class NewsPageDisplayComponent implements OnInit {
   @Input() newsEntry: NewsEntry;
   @Input() authenticated: boolean;
   @Output() close: EventEmitter<any> = new EventEmitter();
-  @Output() openUrl: EventEmitter<{url: string, config: any}> = new EventEmitter<{url: string, config: any}>();
+  @Output() openUrl: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() { }
 
@@ -69,7 +69,7 @@ export class NewsPageDisplayComponent implements OnInit {
      ${date.getDate()}, ${date.getFullYear()}`;
   }
 
-  onOpenUrl(event: {url: string, config: any}): void {
+  onOpenUrl(event: string): void {
     this.openUrl.emit(event);
   }
 }

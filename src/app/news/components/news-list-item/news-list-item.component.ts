@@ -41,7 +41,7 @@ export class NewsListItemComponent implements OnInit {
   @Output() play: EventEmitter<any> = new EventEmitter<any>();
   @Output() pause: EventEmitter<any> = new EventEmitter<any>();
   @Output() view: EventEmitter<any> = new EventEmitter<any>();
-  @Output() openUrl: EventEmitter<{url: string, config: any}> = new EventEmitter<{url: string, config: any}>();
+  @Output() openUrl: EventEmitter<string> = new EventEmitter<string>();
   constructor(@Inject(DOCUMENT) private document: any) { }
 
   ngOnInit() {
@@ -74,7 +74,8 @@ export class NewsListItemComponent implements OnInit {
     this.play.emit(this.newsEntry);
   }
 
-  onOpenUrl(event: {url: string, config: any}): void {
+  onOpenUrl(event: string): void {
+    console.log(event);
     this.openUrl.emit(event);
   }
 }

@@ -10,7 +10,7 @@ import {AuthenticatedGuard} from '../core/guards/authenticated.guard';
 const routes: Routes = [
   {
     path: '',
-    canActivate: [AuthenticatedGuard, TopicsGuard, UserTopicsGuard, NewsGuard],
+    canActivate: [AuthenticatedGuard],
     component: NewsFeedComponent
   },
   {

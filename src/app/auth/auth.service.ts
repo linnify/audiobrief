@@ -84,7 +84,7 @@ export class AuthService {
       .then((credentials: any) => this.apiService.saveToken(credentials))
       .then(() => {
         this.ngZone.run(() => {
-            this.router.navigate(['app', 'news']);
+            this.router.navigate(['news']);
           }
         );
       });
@@ -92,7 +92,7 @@ export class AuthService {
 
   logout() {
     this.apiService.removeAuthToken();
-    this.router.navigate(['app']);
+    this.router.navigate(['/']);
   }
 
   private googleInit() {

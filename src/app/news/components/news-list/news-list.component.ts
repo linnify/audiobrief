@@ -40,7 +40,7 @@ export class NewsListComponent implements OnInit {
   @Output() play: EventEmitter<NewsEntry> = new EventEmitter<NewsEntry>();
   @Output() pause: EventEmitter<any> = new EventEmitter();
   @Output() view: EventEmitter<NewsEntry> = new EventEmitter();
-  @Output() openUrl: EventEmitter<{url: string, config: any}> = new EventEmitter<{url: string, config: any}>();
+  @Output() openUrl: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() { }
 
@@ -59,7 +59,7 @@ export class NewsListComponent implements OnInit {
     this.view.emit(event);
   }
 
-  onOpenUrl(event: {url: string, config: any}) {
+  onOpenUrl(event: string) {
     this.openUrl.emit(event);
   }
 }

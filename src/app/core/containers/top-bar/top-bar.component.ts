@@ -89,7 +89,7 @@ export class TopBarComponent implements OnInit {
 
   onView(event: NewsEntry) {
     this.store.dispatch(new fromRoot.Go({
-      path: ['app', 'news', event.id]
+      path: ['news', event.id]
     }));
   }
 

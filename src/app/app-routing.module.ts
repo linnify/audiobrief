@@ -10,19 +10,20 @@ import {UserTopicsGuard} from './topics/guards/user-topics.guard';
 import {PrivacyPolicyComponent} from './core/components/privacy-policy/privacy-policy.component';
 
 const routes: Routes = [{
-    path: '',
+    path: 'app',
     pathMatch: 'full',
-    redirectTo: 'app'
+    redirectTo: ''
   },
   {
-    path: 'app',
+    path: '',
     pathMatch: 'full',
     canActivate: [UserExistsGuard],
     loadChildren: './auth/auth.module#AuthModule'
   },
   {
-    path: 'app',
+    path: '',
     component: TopBarComponent,
+    canActivate: [TopicsGuard, UserTopicsGuard, NewsGuard],
     children: [
       {
         path: 'news',

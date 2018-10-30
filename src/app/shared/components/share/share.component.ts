@@ -39,7 +39,7 @@ export class ShareComponent implements OnInit {
   @Input() newsEntry: NewsEntry;
   @Input() icon: boolean;
 
-  @Output() openUrl: EventEmitter<{url: string, config: any}> = new EventEmitter<{url: string, config: any}>();
+  @Output() openUrl: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() { }
 
@@ -47,12 +47,7 @@ export class ShareComponent implements OnInit {
   }
 
   onOpenUrl(sharerUrl: string): void {
-    const url: string = `${sharerUrl}${environment.host}app/news/${this.newsEntry.id}`;
-    const config: any = {
-      title: this.newsEntry.title,
-      description: 'Small description',
-      url: `${environment.host}app/news/${this.newsEntry.id}`
-    };
-    this.openUrl.emit({url, config});
+    const url: string = `${sharerUrl}${environment.metadataEndpoint}${this.newsEntry.id}/`;
+    this.openUrl.emit(url);
   }
 }

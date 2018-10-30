@@ -8,5 +8,6 @@ export const environment = {
   googleClientLocalSecret: 'ygTgGK6IdHwec4_4SoMD1GhO',
   facebookClientSecret: 'D5zOfcvWslqZzHWPzlZjRym5tm58bAe4ZRvnMWYQWvnhpAXOd0NpVhyrwy0CkzZnLayVODaoDuJxVaVlYDFaMkQSNhYLTKklNNAaxpebNowtdIrq6Gc9TB7Q3t97k9fl',
   facebookAppId: '1739255486166445',
-  host: 'https://audiobrief.news/'
+  host: 'https://audiobrief.news/',
+  metadataEndpoint: 'https://web.audiobrief.news/news/rapi/social/'
 };

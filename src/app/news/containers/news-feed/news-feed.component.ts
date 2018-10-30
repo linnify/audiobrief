@@ -55,11 +55,11 @@ export class NewsFeedComponent implements OnInit {
 
   onView(event: NewsEntry) {
     this.store.dispatch(new fromRoot.Go({
-      path: ['/', 'app', 'news', event.id]
+      path: ['/', 'news', event.id]
     }));
   }
 
-  onOpenUrl(event: {url: string, config: any}) {
-    window.open(event.url, '_blank');
+  onOpenUrl(url: string) {
+    window.open(url, '_blank');
   }
 }

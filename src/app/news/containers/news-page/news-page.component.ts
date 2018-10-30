@@ -71,11 +71,12 @@ export class NewsPageComponent implements OnInit {
 
   onClose() {
     this.store.dispatch(new fromRoot.Go({
-      path: ['app', 'news']
+      path: ['news']
     }));
   }
 
-  onOpenUrl(event: {url: string, config: any}) {
-    window.open(event.url, '_blank');
+  onOpenUrl(url: string) {
+    console.log(url);
+    window.open(url, '_blank');
   }
 }

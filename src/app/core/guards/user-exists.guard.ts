@@ -20,7 +20,7 @@ export class UserExistsGuard implements CanActivate {
     return this.apiService.isAuthenticated()
       .then((authenticated: boolean) => {
           if (authenticated) {
-            this.router.navigate(['app', 'news']);
+            this.router.navigate(['news']);
           }
           return true;
         }

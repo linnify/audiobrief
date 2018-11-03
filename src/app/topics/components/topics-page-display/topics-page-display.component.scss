@@ -19,3 +19,10 @@
 .no-margin {
   margin: 0
 }
+
+.profile-text {
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  flex-direction: column;
+}

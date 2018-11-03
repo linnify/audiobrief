@@ -13,7 +13,8 @@ export const environment = {
   facebookClientSecret: 'D5zOfcvWslqZzHWPzlZjRym5tm58bAe4ZRvnMWYQWvnhpAXOd0NpVhyrwy0CkzZnLayVODaoDuJxVaVlYDFaMkQSNhYLTKklNNAaxpebNowtdIrq6Gc9TB7Q3t97k9fl',
   facebookAppId: '1739255486166445',
   host: 'http://localhost:4200/',
-  metadataEndpoint: 'https://web.audiobrief.news/news/rapi/social/'
+  metadataEndpoint: 'https://web.audiobrief.news/news/rapi/social/',
+  imagesLocation: 'https://web.audiobrief.news/static/images/'
 };
 
 /*

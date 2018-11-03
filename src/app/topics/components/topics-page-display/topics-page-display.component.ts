@@ -1,17 +1,18 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TagTopic, Topic} from '../../types/topic';
 import {UserProfile} from '../../types/user-profile';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'topics-page-display',
   template: `
     <div class="popup-dimension">
-      <div fxFlexFill fxLayoutAlign="end">
+      <div fxLayoutAlign="end">
         <button mat-icon-button (click)="onClose()">
           <mat-icon>close</mat-icon>
         </button>
       </div>
-      <div class="mat-headline" fxFlexFill fxLayoutAlign="center center" fxLayout="row">
+      <div class="mat-headline" fxLayoutAlign="center center" fxLayout="row">
         CREATE YOUR PLAYLIST
       </div>
       <div>
@@ -19,13 +20,14 @@ import {UserProfile} from '../../types/user-profile';
           I am a...
         </div>
         <div fxLayoutAlign="row" fxLayout="row wrap" fxFlexFill>
-          <div *ngFor="let userProfile of userProfiles; let i = index" 
+          <div *ngFor="let userProfile of userProfiles; let i = index"
                fxLayout="column" fxLayoutAlign="center center" class="profile app-color"
                (click)="onSelectUserProfile(userProfile)">
             <div fxLayout="column" fxLayoutAlign="center center"  [ngClass]=
-                   "{'selected-profile': selectedUserProfile && userProfile.id === selectedUserProfile.id}">
-              <img src="/assets/user-profile.png">
-              <div class="bold italic mat-body-2 text-center no-margin text-uppercase">{{userProfile.name}}</div>
+              "{'selected-profile': isSelectedUserProfile(userProfile)}">
+              <img style="width: 64px; height: 64px;"
+                src='{{isSelectedUserProfile(userProfile) ? getImage(userProfile.icon_file_sel) : getImage(userProfile.icon_file)}}'>
+              <div class="bold italic mat-body-2 text-center no-margin text-uppercase profile-text">{{userProfile.name}}</div>
             </div>
           </div>
         </div>
@@ -52,13 +54,15 @@ import {UserProfile} from '../../types/user-profile';
             </textarea>
           </mat-form-field>
         </div>
-        <div>
-          <div>Hide already listened news</div>
-          <mat-slide-toggle color="primary" [checked]="preferences && preferences.hide_listened_and_skipped" 
-                            (change)="onChangePreferences($event)"></mat-slide-toggle>
-        </div>
-        <div fxLayoutAlign="end">
-          <button mat-raised-button type="button" color="primary" (click)="onSubmitTopics()" >Save</button>
+        <div fxLayout="row" fxLayoutAlign="space-between center">\
+          <div>
+            <div>Hide already listened news</div>
+            <mat-slide-toggle color="primary" [checked]="preferences && preferences.hide_listened_and_skipped"
+                              (change)="onChangePreferences($event)"></mat-slide-toggle>
+          </div>
+          <div>
+            <button mat-raised-button type="button" color="primary" (click)="onSubmitTopics()" >Save</button>
+          </div>
         </div>
       </div>
     </div>
@@ -117,5 +121,13 @@ export class TopicsPageDisplayComponent implements OnInit {
 
   onClose() {
     this.close.emit();
+  }
+
+  isSelectedUserProfile(userProfile: UserProfile) {
+    return this.selectedUserProfile && userProfile.id === this.selectedUserProfile.id;
+  }
+
+  getImage(name: string) {
+    return `${environment.imagesLocation}${name}`;
   }
 }

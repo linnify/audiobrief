@@ -51,6 +51,21 @@ $medium-image-size: 100px;
   height: $medium-image-size;
 }
 
+.bold {
+  font-weight: bolder;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
 @media screen and (max-width: 1000px) {
   .main-button {
     line-height:35px !important;

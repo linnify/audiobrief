@@ -1,9 +1,15 @@
 import {Action} from '@ngrx/store';
 import {TagTopic} from '../types/topic';
+import {UserProfile} from '../types/user-profile';
 
 export const LOAD_TOPICS = '[Topics] Load Topics';
 export const LOAD_TOPICS_SUCCESS = '[Topics] Load Topics Success';
 export const LOAD_TOPICS_FAIL = '[Topics] Load Topics Fail';
+
+export const LOAD_USER_PROFILES = '[Topics] Load User Profiles';
+export const LOAD_USER_PROFILES_SUCCESS = '[Topics] Load User Profiles Success';
+export const LOAD_USER_PROFILES_FAIL = '[Topics] Load User Profiles Fail';
+
 
 export const LOAD_USER_TOPICS = '[Topics] Load User Topics';
 export const LOAD_USER_TOPICS_SUCCESS = '[Topics] Load User Topics Success';
@@ -81,6 +87,24 @@ export class ChangePreferencesFail implements Action {
   constructor(public error: any) {}
 }
 
+export class LoadUserProfiles implements Action {
+  readonly type = LOAD_USER_PROFILES;
+
+  constructor() {}
+}
+
+export class LoadUserProfilesSuccess implements Action {
+  readonly type = LOAD_USER_PROFILES_SUCCESS;
+
+  constructor(public userProfiles: UserProfile[]) {}
+}
+
+export class LoadUserProfilesFail implements Action {
+  readonly type = LOAD_USER_PROFILES_FAIL;
+
+  constructor(public error: any) {}
+}
+
 export type TopicsActions =
   | LoadTopics
   | LoadTopicsSuccess
@@ -93,4 +117,7 @@ export type TopicsActions =
   | LoadUserPreferencesFail
   | ChangePreferences
   | ChangePreferencesSuccess
-  | ChangePreferencesFail;
+  | ChangePreferencesFail
+  | LoadUserProfiles
+  | LoadUserProfilesSuccess
+  | LoadUserProfilesFail;

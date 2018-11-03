@@ -45,6 +45,7 @@ export class TopicsGuard implements CanActivate {
           if (!loaded) {
             this.store.dispatch(new fromTopics.LoadUserPreferences());
             this.store.dispatch(new fromTopics.LoadTopics());
+            this.store.dispatch(new fromTopics.LoadUserProfiles());
           }
         }),
         take(1)

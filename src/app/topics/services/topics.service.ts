@@ -3,6 +3,7 @@ import {ApiService} from '../../shared/services/api.service';
 import {Observable} from 'rxjs';
 import {first, map} from 'rxjs/operators';
 import {TagTopic, Topic} from '../types/topic';
+import {UserProfile} from '../types/user-profile';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,10 @@ export class TopicsService {
 
   getUserTagsTopics(): Observable<TagTopic[]> {
     return this.apiService.get<TagTopic[]>('gettagstopics/');
+  }
+
+  getUserProfiles(): Observable<UserProfile[]> {
+    return this.apiService.get<UserProfile[]>('userprofiles/');
   }
 
   saveTopics(topics: TagTopic[]): Promise<TagTopic[]> {

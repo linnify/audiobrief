@@ -13,6 +13,10 @@ $audionews-app-theme: mat-light-theme($audionews-app-primary, $audionews-app-acc
 $grey-color: map_get($mat-grey, 500);
 $main-color: #2f64ac;
 
+.app-color {
+  color: $main-color;
+}
+
 @media screen and (max-width: 1000px) {
 
   .full-popup  {

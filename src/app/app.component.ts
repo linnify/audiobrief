@@ -3,10 +3,12 @@ import {MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {FacebookService, InitParams} from 'ngx-facebook';
 import {environment} from '../environments/environment';
+import {PwaService} from './core/services/pwa.service';
 
 @Component({
   selector: 'app-root',
   template: `
+    <button *ngIf="Pwa.promptEvent" (click)="installPwa()">Install</button>
     <router-outlet></router-outlet>
   `,
   styleUrls: ['./app.component.scss']
@@ -18,6 +20,7 @@ export class AppComponent {
     private matIconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
     private fb: FacebookService,
+    public Pwa: PwaService
   ) {
     const iconDefinitions = {
       facebook: 'assets/facebook.svg',
@@ -39,5 +42,9 @@ export class AppComponent {
     };
 
     this.fb.init(initParams);
+  }
+
+  installPwa(): void {
+    this.Pwa.promptEvent.prompt();
   }
 }

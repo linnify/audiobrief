@@ -1,7 +1,7 @@
 {
   "name": "AudioBrief",
   "short_name": "AudioBrief",
-  "theme_color": "#1976d2",
+  "theme_color": "#2f64ac",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "/",

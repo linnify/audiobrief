@@ -7,6 +7,7 @@ import {catchError, map, switchMap, tap} from 'rxjs/operators';
 import * as topicsActions from './topics.actions';
 import {TopicsService} from '../services/topics.service';
 import {TagTopic} from '../types/topic';
+import {UserProfile} from '../types/user-profile';
 
 @Injectable()
 export class TopicsEffects {
@@ -49,6 +50,20 @@ export class TopicsEffects {
           .pipe(
             map((preferences: any) => new topicsActions.LoadUserPreferencesSuccess(preferences)),
             catchError(error => of(new topicsActions.LoadUserPreferencesFail(error)))
+          );
+      })
+    );
+
+  @Effect()
+  loadUserProfiles$: Observable<Action> = this.actions$
+    .pipe(
+      ofType(topicsActions.LOAD_USER_PROFILES),
+      switchMap((action: topicsActions.LoadUserProfiles) => {
+
+        return this.topicsService.getUserProfiles()
+          .pipe(
+            map((userProfiles: UserProfile[]) => new topicsActions.LoadUserProfilesSuccess(userProfiles)),
+            catchError(error => of(new topicsActions.LoadUserProfilesFail(error)))
           );
       })
     );

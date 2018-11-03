@@ -2,6 +2,7 @@ import {createEntityAdapter, EntityState} from '@ngrx/entity';
 import * as topicsActions from './topics.actions';
 import {createFeatureSelector, createSelector} from '@ngrx/store';
 import {Topic} from '../types/topic';
+import {UserProfile} from '../types/user-profile';
 
 export const topicsAdapter = createEntityAdapter<Topic>({
   selectId: (topic: any) => topic.label
@@ -12,13 +13,15 @@ export interface TopicsState extends EntityState<Topic> {
   loaded: boolean;
   selectedTopicsIds: number[];
   preferences: any;
+  userProfiles: UserProfile[];
 }
 
 export const initialState: TopicsState = topicsAdapter.getInitialState({
   loading: false,
   loaded: false,
   selectedTopicsIds: [],
-  preferences: undefined
+  preferences: undefined,
+  userProfiles: undefined
 });
 
 export function reducer(
@@ -54,6 +57,12 @@ export function reducer(
         preferences: action.preferences
       };
     }
+    case topicsActions.LOAD_USER_PROFILES_SUCCESS: {
+      return {
+        ...state,
+        userProfiles: action.userProfiles
+      };
+    }
     default:
       return state;
   }
@@ -79,4 +88,9 @@ export const selectSelectedTopicsIds = createSelector(
 export const selectPreferences = createSelector(
   selectTopicsState,
   (state: TopicsState) => state.preferences
+);
+
+export const selectUserProfiles = createSelector(
+  selectTopicsState,
+  (state: TopicsState) => state.userProfiles
 );

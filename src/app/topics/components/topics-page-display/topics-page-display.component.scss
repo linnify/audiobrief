@@ -1,1 +1,28 @@
 @import '../../../shared/styles/theme';
+@import '../../../shared/styles/shared';
+
+.profile {
+  width: 155px;
+  height: 150px;
+  cursor: pointer;
+  padding: 10px 0;
+  //margin-right: 10px;
+}
+
+.selected-profile {
+  background-color: #2b6cc5;
+  color: white;
+  border-radius: 20px;
+  padding: $small-margin;
+}
+
+.no-margin {
+  margin: 0
+}
+
+.profile-text {
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  flex-direction: column;
+}

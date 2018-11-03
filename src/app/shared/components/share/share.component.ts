@@ -47,7 +47,7 @@ export class ShareComponent implements OnInit {
   }
 
   onOpenUrl(sharerUrl: string): void {
-    const url: string = `${sharerUrl}${environment.metadataEndpoint}${this.newsEntry.id}/`;
+    const url: string = `${sharerUrl}${environment.apiUrl}/social/${this.newsEntry.id}/`;
     this.openUrl.emit(url);
   }
 }

@@ -6,6 +6,7 @@ import * as fromNews from '../../../news/store';
 import {TagTopic, Topic} from '../../types/topic';
 import {Observable} from 'rxjs';
 import {TopicsService} from '../../services/topics.service';
+import {UserProfile} from '../../types/user-profile';
 
 @Component({
   selector: 'topics-page',
@@ -14,6 +15,7 @@ import {TopicsService} from '../../services/topics.service';
       [topics]="topics$ | async"
       [preferences]="preferences$ | async"
       [defaultSelectedIds]="selectedTopicsIds$ | async"
+      [userProfiles]="userProfiles$ | async"
       (submit)="onSubmit($event)"
       (close)="onClose()"
       (changePreferences)="onChangePreferences($event)"
@@ -26,6 +28,7 @@ export class TopicsPageComponent implements OnInit {
   topics$: Observable<Topic[]>;
   preferences$: Observable<any>;
   selectedTopicsIds$: Observable<number[]>;
+  userProfiles$: Observable<UserProfile[]>;
 
   constructor(
     private topicsService: TopicsService,
@@ -40,6 +43,7 @@ export class TopicsPageComponent implements OnInit {
     this.topics$ = this.store.pipe(select(topicsStore.selectAll));
     this.preferences$ = this.store.pipe(select(topicsStore.selectPreferences));
     this.selectedTopicsIds$ = this.store.pipe(select(topicsStore.selectSelectedTopicsIds));
+    this.userProfiles$ = this.store.pipe(select(topicsStore.selectUserProfiles));
   }
 
   onSubmit(result: {topics: TagTopic[], suggestions: string} ) {

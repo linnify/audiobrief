@@ -16,6 +16,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {globalLogoutMetaReducer} from './store/reducers/logout.reducer';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {FacebookModule} from 'ngx-facebook';
+import { ServiceWorkerModule } from '@angular/service-worker';
 // import { AuthServiceConfig, GoogleLoginProvider, SocialLoginModule} from 'angularx-social-login';
 
 
@@ -33,7 +34,8 @@ import {FacebookModule} from 'ngx-facebook';
     EffectsModule.forRoot(effects),
     StoreRouterConnectingModule,
     environment.production === false ? StoreDevtoolsModule.instrument() : [],
-    FacebookModule.forRoot()
+    FacebookModule.forRoot(),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     {

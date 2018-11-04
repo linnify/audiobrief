@@ -81,9 +81,6 @@ export class LoginFormComponent implements OnInit {
   get password() {
     return this.form.get('password');
   }
-  get passwordInvalid() {
-    return this.password.hasError('required') && this.password.touched;
-  }
 
   onLogin() {
     if (this.form.valid) {

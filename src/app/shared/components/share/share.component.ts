@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {environment} from '../../../../environments/environment';
 import {NewsEntry} from '../../../news/types/news-entry';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'audiobrief-share',
@@ -27,7 +28,7 @@ import {NewsEntry} from '../../../news/types/news-entry';
         <mat-icon svgIcon="linkedin"></mat-icon>
         <span>Linkedin</span>
       </button>
-      <button mat-menu-item [text-copy]="newsEntry.url">
+      <button mat-menu-item ngxClipboard [cbContent]="newsEntry.url" (cbOnSuccess)="onCopySuccess()">
         <mat-icon svgIcon="copy"></mat-icon>
         <span>Copy link</span>
       </button>
@@ -41,7 +42,7 @@ export class ShareComponent implements OnInit {
 
   @Output() openUrl: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor() { }
+  constructor(public snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -49,5 +50,12 @@ export class ShareComponent implements OnInit {
   onOpenUrl(sharerUrl: string): void {
     const url: string = `${sharerUrl}${environment.apiUrl}/social/${this.newsEntry.id}/`;
     this.openUrl.emit(url);
+  }
+
+  onCopySuccess() {
+    this.snackBar.open('News link copied successful', '', {
+      duration: 400
+    });
+
   }
 }

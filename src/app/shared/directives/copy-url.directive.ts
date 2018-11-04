@@ -43,7 +43,6 @@ export class TextCopyDirective {
         duration: 400
       });
 
-      // console.log(msg);
     } catch (err) {
       console.log('unable to copy');
     }

@@ -1,7 +1,6 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {NewsEntry} from '../../types/news-entry';
 import {months} from '../../../shared/constants';
-import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'news-list-item',
@@ -42,7 +41,7 @@ export class NewsListItemComponent implements OnInit {
   @Output() pause: EventEmitter<any> = new EventEmitter<any>();
   @Output() view: EventEmitter<any> = new EventEmitter<any>();
   @Output() openUrl: EventEmitter<string> = new EventEmitter<string>();
-  constructor(@Inject(DOCUMENT) private document: any) { }
+  constructor() { }
 
   ngOnInit() {
   }
@@ -66,6 +65,7 @@ export class NewsListItemComponent implements OnInit {
 
   onPause(event) {
     event.stopPropagation();
+
     this.pause.emit(this.newsEntry);
   }
 
@@ -75,7 +75,6 @@ export class NewsListItemComponent implements OnInit {
   }
 
   onOpenUrl(event: string): void {
-    console.log(event);
     this.openUrl.emit(event);
   }
 }

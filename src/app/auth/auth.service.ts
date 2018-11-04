@@ -102,7 +102,6 @@ export class AuthService {
         'apiKey': environment.googleClientLocalSecret,
         'clientId': environment.googleClientLocalhost,
         'scope': 'profile',
-
       });
     });
   }

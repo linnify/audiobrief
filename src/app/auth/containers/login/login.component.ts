@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../auth.service';
-import {Observable} from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
 
@@ -47,6 +46,6 @@ export class LoginComponent implements OnInit {
   }
 
   async onLoginWithFacebook() {
-    await this.authService.loginWithFacebook()
+    await this.authService.loginWithFacebook();
   }
 }

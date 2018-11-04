@@ -21,7 +21,6 @@ export class TopicsGuard implements CanActivate {
     return this.apiService.authenticated()
       .pipe(
         switchMap((authenticated: boolean) => {
-          console.log(authenticated);
           if (!authenticated) {
             return of(true);
           }

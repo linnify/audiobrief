@@ -19,6 +19,7 @@ export class NewsEntry {
   credibility: number;
   topic: Topic;
   mp3_file: string;
+  mp3_length: number;
   uploader: number;
   source_new?: SourceNew;
 }

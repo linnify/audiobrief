@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {NewsEntry} from '../../types/news-entry';
 import {months} from '../../../shared/constants';
 
@@ -32,9 +32,6 @@ import {months} from '../../../shared/constants';
                           [icon]="false" 
                           [newsEntry]="newsEntry" 
                           (openUrl)="onOpenUrl($event)"></audiobrief-share>
-        <!--<div class="mat-title news-page__actions-share" [text-copy]="newsEntry.url">-->
-          <!--SHARE-->
-        <!--</div>-->
       </div>
     </div>
 

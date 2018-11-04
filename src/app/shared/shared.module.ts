@@ -8,6 +8,7 @@ import {ScrollableDirective} from './directives/scrollable.directive';
 import { TextCopyDirective } from './directives/copy-url.directive';
 import { MinuteSecondsPipe } from './pipes/minute-seconds.pipe';
 import { ShareComponent } from './components/share/share.component';
+import {ClipboardModule} from 'ngx-clipboard';
 
 @NgModule({
   imports: [
@@ -16,9 +17,11 @@ import { ShareComponent } from './components/share/share.component';
     ReactiveFormsModule,
     AppMaterialModule,
     HttpClientModule,
+    ClipboardModule,
   ],
   declarations: [NotFoundComponent, ScrollableDirective, TextCopyDirective, MinuteSecondsPipe, ShareComponent],
   exports: [
+    ClipboardModule,
     FormsModule,
     ReactiveFormsModule,
     AppMaterialModule,

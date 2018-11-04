@@ -8,7 +8,6 @@ import {TopicsPageComponent} from '../../../topics/containers/topics-page/topics
 import {select, Store} from '@ngrx/store';
 import * as newsStore from '../../../news/store';
 import * as fromRoot from '../../../store';
-import {Topic} from '../../../topics/types/topic';
 import {Logout} from '../../../store';
 import {NewsFeedbackComponent} from '../news-feedback/news-feedback.component';
 import {ApiService} from '../../../shared/services/api.service';
@@ -55,7 +54,6 @@ export class TopBarComponent implements OnInit {
   newsEntries$: Observable<NewsEntry[]>;
   currentNews$: Observable<NewsEntry>;
   playing$: Observable<boolean>;
-  topics$: Observable<Topic[]>;
   audio$: Observable<HTMLAudioElement>;
   authenticated$: Observable<boolean>;
 
@@ -94,15 +92,6 @@ export class TopBarComponent implements OnInit {
   }
 
   onTopics() {
-    const config = {
-      position: {
-        top: '10px',
-        right: '10px'
-      },
-      height: '98%',
-      width: '100vw',
-      panelClass: 'full-screen-modal',
-    };
     const dialogRef = this.dialog.open(TopicsPageComponent, {
         panelClass: 'full-popup'
       }

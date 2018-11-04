@@ -73,6 +73,10 @@ export class AudioPlayerComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngAfterViewInit() {
+
+    this.audio.addEventListener('loadeddata', () => {
+    });
+
     this.audio.addEventListener('timeupdate', () => {
       this.progress = this.audio.currentTime * 100 / this.audio.duration;
     });

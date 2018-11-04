@@ -7,6 +7,7 @@
   margin-top: $top-bar-height;
   width: 100%;
   overflow-y: scroll;
+  //-webkit-overflow-scrolling: touch;
   overflow-x: hidden;
   padding-top: 30px;
 }

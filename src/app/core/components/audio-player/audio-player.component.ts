@@ -30,7 +30,7 @@ import {NewsEntry} from '../../../news/types/news-entry';
         </button>
         <mat-progress-bar class="progress-bar-container" mode="determinate" [value]="progress"></mat-progress-bar>
         <div class="audio-player__duration">
-          <span *ngIf="audio.duration">{{audio.duration | minuteSeconds}}</span>
+          <span *ngIf="currentNews.mp3_length">{{currentNews.mp3_length | minuteSeconds}}</span>
         </div>
       </div>
     </div>
@@ -74,11 +74,8 @@ export class AudioPlayerComponent implements OnInit, OnChanges, AfterViewInit {
 
   ngAfterViewInit() {
 
-    this.audio.addEventListener('loadeddata', () => {
-    });
-
     this.audio.addEventListener('timeupdate', () => {
-      this.progress = this.audio.currentTime * 100 / this.audio.duration;
+      this.progress = this.audio.currentTime * 100 / this.currentNews.mp3_length;
     });
 
     this.audio.addEventListener('ended', () => {
